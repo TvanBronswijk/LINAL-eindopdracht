@@ -5,9 +5,9 @@
 
 int main(int argc, char* argv[])
 {
-	Vector v1(-2, -1);
-	Vector v2(5, 5);
-	Vector v3 = v1 + v2;
+	Vector v1 = { -2, -1 };
+	Vector v2 = { 5, 5 };
+	Vector v3 = (v1 + v2) * .5;
 
 	if (SDL_Init(SDL_INIT_VIDEO) == 0) {
 		SDL_Window* window = NULL;

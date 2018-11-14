@@ -1,59 +1,38 @@
 #include <iostream>
 #include <SDL.h>
-#include "axesenderer.h"
-#include "vector.h"
+#include "math.h"
+#include "render.h"
+
+using namespace render;
+using namespace math;
+
+static const int WIDTH = 1280;
+static const int HEIGHT = 640;
+
+void demo() {
+	vector<float> v1 = { -12, -11 };
+	vector<float> v2 = { 5, 15 };
+	vector<float> v3 = (v1 + v2) * .175;
+
+	renderer re(WIDTH, HEIGHT);
+	graph graph(rectangle<float>(0.0f, 0.0f, WIDTH, HEIGHT));
+	while (!re.done) {
+		re.clear();
+		graph.draw(re, { 100, 100, 100 });
+		graph.draw_vector(re, v1, C_RED);
+		graph.draw_vector(re, v2, C_GREEN);
+		graph.draw_vector(re, v3, C_BLUE);
+		re.render();
+		re.poll();
+	}
+}
 
 int main(int argc, char* argv[])
 {
-	Vector v1 = { -2, -1 };
-	Vector v2 = { 5, 5 };
-	Vector v3 = (v1 + v2) * .5;
-
-	if (SDL_Init(SDL_INIT_VIDEO) == 0) {
-		SDL_Window* window = NULL;
-		SDL_Renderer* renderer = NULL;
-		AxesRenderer* axes = NULL;
-
-		if (SDL_CreateWindowAndRenderer(640, 480, 0, &window, &renderer) == 0) {
-			SDL_bool done = SDL_FALSE;
-			axes = new AxesRenderer(640, 480, 32);
-
-			while (!done) {
-				SDL_Event event;
-
-				SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-				SDL_RenderClear(renderer);
-
-				axes->render(renderer);
-				axes->draw(renderer, v1);
-				axes->draw(renderer, v2);
-				axes->draw(renderer, v3);
-
-				SDL_RenderPresent(renderer);
-
-				while (SDL_PollEvent(&event)) {
-					if (event.type == SDL_QUIT) {
-						done = SDL_TRUE;
-					}
-				}
-			}
-		}
-
-		if (renderer) {
-			SDL_DestroyRenderer(renderer);
-		}
-		if (window) {
-			SDL_DestroyWindow(window);
-		}
-		if (axes) {
-			delete axes;
-		}
-	}
-	SDL_Quit();
-
+	//logic
+	demo();
 	//memory leak detection
 	_CrtDumpMemoryLeaks();
-
 	//exit
 	return 0;
 }

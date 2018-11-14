@@ -150,14 +150,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="axesenderer.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="vector.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="axesenderer.h" />
-    <ClInclude Include="drawable.h" />
-    <ClInclude Include="vector.h" />
+    <ClInclude Include="render.h" />
+    <ClInclude Include="math.h" />
+    <ClInclude Include="Math\types.h" />
+    <ClInclude Include="Render\color.h" />
+    <ClInclude Include="Render\graph.h" />
+    <ClInclude Include="Render\renderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

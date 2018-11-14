@@ -22,30 +22,30 @@
     <Filter Include="Header Files\Math">
       <UniqueIdentifier>{78ff89be-206c-4db5-9f29-ef06a8630810}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Math">
-      <UniqueIdentifier>{067a8ca0-95ce-4ccf-ae03-4f4353d6dc21}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="axesenderer.cpp">
-      <Filter>Source Files\Drawables</Filter>
-    </ClCompile>
-    <ClCompile Include="vector.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="axesenderer.h">
-      <Filter>Header Files\Drawables</Filter>
-    </ClInclude>
-    <ClInclude Include="drawable.h">
-      <Filter>Header Files\Drawables</Filter>
-    </ClInclude>
-    <ClInclude Include="vector.h">
+    <ClInclude Include="Math\types.h">
       <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="render.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\graph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\color.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

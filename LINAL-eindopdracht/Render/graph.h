@@ -7,45 +7,43 @@ using namespace math;
 namespace render {
 	class graph {
 	private:
-		float _grid;
+		renderer& _re;
 		rectangle<float> _size;
+		float _scale;
 
 		point<float> to_grid_point(point<float> p) {
 			point<float> center = _size.center();
-			return { center.x + (p.x * _grid), center.y + (p.y * _grid) };
+			return { center.x + (p.x * _scale), center.y + (p.y * _scale) };
 		};
 	public:
-		graph(rectangle<float> size, float grid = 16.0f) : _size(size), _grid(grid) {}
-		void draw(renderer& r, bool zero_flag = true) {
+		graph(renderer& renderer, rectangle<float> size, float grid = 16.0f) : _re(renderer), _size(size), _scale(grid) {}
+		void draw(color c = C_GRAY, bool zero_flag = true, color zero_c = C_WHITE) {
+			_re.set_color(c);
 			//vertical
-			for (int x = _size.x1; x < _size.x2; x += _grid)
-				r.line(x, _size.y1, x, _size.y2);
+			for (int x = _size.x1; x < _size.x2; x += _scale)
+				_re.render_line(x, _size.y1, x, _size.y2);
 			//horizontal
-			for (int y = _size.y1; y < _size.y2; y += _grid)
-				r.line(_size.x1, y, _size.x2, y);
+			for (int y = _size.y1; y < _size.y2; y += _scale)
+				_re.render_line(_size.x1, y, _size.x2, y);
 
 			if (zero_flag) {
 				point<float> center = _size.center();
-				r.set_color(C_WHITE);
-				r.line(center.x, _size.y1, center.x, _size.y2);
-				r.line(_size.x1, center.y, _size.x2, center.y);
-				r.set_color(C_BLACK);
+				_re
+					.set_color(zero_c)
+					.render_line(center.x, _size.y1, center.x, _size.y2)
+					.render_line(_size.x1, center.y, _size.x2, center.y)
+					.set_color(C_BLACK);
 			}
 		}
-		void draw(renderer& r, color c, bool zero_flag = true) {
-			r.set_color(c);
-			draw(r);
-			r.set_color(C_BLACK);
-		}
-		void draw_vector(renderer& r, vector<float> v) {
+		void draw_vector(vector<float> v) {
 			point<float> center = _size.center();
 			point<float> end = to_grid_point({v.x, v.y});
-			r.line(center.x, center.y, end.x, end.y);
+			_re.render_line(center.x, center.y, end.x, end.y);
 		}
-		void draw_vector(renderer& r, vector<float> v, color c) {
-			r.set_color(c);
-			draw_vector(r, v);
-			r.set_color(C_BLACK);
+		void draw_vector(vector<float> v, color c) {
+			_re.set_color(c);
+			draw_vector(v);
+			_re.set_color(C_BLACK);
 		}
 		~graph() = default;
 	};

@@ -14,17 +14,14 @@ void demo() {
 	vector<float> v2 = { 5, 15 };
 	vector<float> v3 = .175 * (v1 + v2);
 
-	renderer re(WIDTH, HEIGHT);
-	graph graph(rectangle<float>(0.0f, 0.0f, WIDTH, HEIGHT));
-	while (!re.done) {
-		re.clear();
-		graph.draw(re, { 100, 100, 100 });
-		graph.draw_vector(re, v1, C_RED);
-		graph.draw_vector(re, v2, C_GREEN);
-		graph.draw_vector(re, v3, C_BLUE);
-		re.render();
-		re.poll();
-	}
+	renderer(WIDTH, HEIGHT)
+		.display([&](renderer& r) {
+			graph graph(r, rectangle<float>(0.0f, 0.0f, WIDTH, HEIGHT));
+			graph.draw();
+			graph.draw_vector(v1, C_RED);
+			graph.draw_vector(v2, C_GREEN);
+			graph.draw_vector(v3, C_BLUE);
+		});
 }
 
 int main(int argc, char* argv[])

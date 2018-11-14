@@ -8,6 +8,7 @@ namespace render {
 	};
 
 	static const color C_WHITE = { 255, 255, 255 };
+	static const color C_GRAY = { 127, 127, 127 };
 	static const color C_BLACK = { 0, 0, 0 };
 	static const color C_RED = { 255, 0, 0 };
 	static const color C_GREEN = { 0, 255, 0 };

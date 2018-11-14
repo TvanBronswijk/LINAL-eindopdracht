@@ -12,7 +12,7 @@ static const int HEIGHT = 640;
 void demo() {
 	vector<float> v1 = { -12, -11 };
 	vector<float> v2 = { 5, 15 };
-	vector<float> v3 = (v1 + v2) * .175;
+	vector<float> v3 = .175 * (v1 + v2);
 
 	renderer re(WIDTH, HEIGHT);
 	graph graph(rectangle<float>(0.0f, 0.0f, WIDTH, HEIGHT));

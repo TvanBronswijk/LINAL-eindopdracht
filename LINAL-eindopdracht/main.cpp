@@ -10,13 +10,13 @@ static const int WIDTH = 1280;
 static const int HEIGHT = 640;
 
 void demo() {
-	vector<float> v1 = { -12, -11 };
-	vector<float> v2 = { 5, 15 };
-	vector<float> v3 = .175 * (v1 + v2);
+	vector<float> v1 = { -12.0f, -11.0f };
+	vector<float> v2 = { 5.0f, 15.0f };
+	vector<float> v3 = .175f * (v1 + v2);
 
 	renderer(WIDTH, HEIGHT)
 		.display([&](renderer& r) {
-			graph graph(r, rectangle<float>(0.0f, 0.0f, WIDTH, HEIGHT));
+			graph graph(r, { 0, 0, WIDTH, HEIGHT });
 			graph.draw();
 			graph.draw_vector(v1, C_RED);
 			graph.draw_vector(v2, C_GREEN);

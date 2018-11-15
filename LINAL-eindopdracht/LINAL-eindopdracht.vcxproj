@@ -159,6 +159,7 @@
     <ClInclude Include="Render\color.h" />
     <ClInclude Include="Render\graph.h" />
     <ClInclude Include="Render\renderer.h" />
+    <ClInclude Include="Render\util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

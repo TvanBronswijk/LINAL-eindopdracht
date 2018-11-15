@@ -47,5 +47,8 @@
     <ClInclude Include="Render\color.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Render\util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

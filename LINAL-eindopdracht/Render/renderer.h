@@ -20,7 +20,7 @@ namespace render {
 			}
 		};
 
-		renderer& clear(color c = C_BLACK) {
+		renderer& clear(color c = C_WHITE) {
 			SDL_SetRenderDrawColor(_renderer, c.r, c.g, c.b, SDL_ALPHA_OPAQUE);
 			SDL_RenderClear(_renderer);
 			return *this;
@@ -29,7 +29,7 @@ namespace render {
 			SDL_SetRenderDrawColor(_renderer, r, g, b, SDL_ALPHA_OPAQUE);
 			return *this;
 		}
-		renderer& set_color(color c = C_WHITE) {
+		renderer& set_color(color c = C_BLACK) {
 			SDL_SetRenderDrawColor(_renderer, c.r, c.g, c.b, SDL_ALPHA_OPAQUE);
 			return *this;
 		}

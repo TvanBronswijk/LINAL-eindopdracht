@@ -2,60 +2,70 @@
 #include <functional>
 #include <SDL.h>
 #include "color.h"
+#include "util.h"
 
 namespace render {
 	class renderer {
 	private:
 		SDL_Window* _window;
 		SDL_Renderer* _renderer;
+		bool _done;
 	public:
-		bool done;
-
 		renderer(int w, int h) : _window(NULL), _renderer(NULL) {
-			done = true;
-			if (SDL_Init(SDL_INIT_VIDEO) == 0) {
-				if (SDL_CreateWindowAndRenderer(w, h, 0, &_window, &_renderer) == 0) {
-					done = false;
-				}
-			}
+			_done = !(SDL_Init(SDL_INIT_VIDEO) == 0 && SDL_CreateWindowAndRenderer(w, h, 0, &_window, &_renderer) == 0);
+			if(_done)
+				throw -1;
 		};
 
-		renderer& clear(color c = C_WHITE) {
-			SDL_SetRenderDrawColor(_renderer, c.r, c.g, c.b, SDL_ALPHA_OPAQUE);
-			SDL_RenderClear(_renderer);
+		const renderer& clear(int r, int g, int b) const {
+			SDL_SetRenderDrawColor(_renderer, r, g, b, SDL_ALPHA_OPAQUE);
+			if (SDL_RenderClear(_renderer) != 0)
+				throw -1;
 			return *this;
 		}
-		renderer& set_color(int r, int g, int b) {
+		const renderer& clear(color c = colors::WHITE) const {
+			return clear(c.r, c.g, c.b);
+		}
+		const renderer& set_color(int r, int g, int b) const {
 			SDL_SetRenderDrawColor(_renderer, r, g, b, SDL_ALPHA_OPAQUE);
 			return *this;
 		}
-		renderer& set_color(color c = C_BLACK) {
-			SDL_SetRenderDrawColor(_renderer, c.r, c.g, c.b, SDL_ALPHA_OPAQUE);
+		const renderer& set_color(color c = colors::BLACK) const {
+			return set_color(c.r, c.g, c.b);
+		}
+		const renderer& render_line(int x1, int y1, int x2, int y2) const {
+			if (SDL_RenderDrawLine(_renderer, x1, y1, x2, y2) != 0)
+				throw -1;
 			return *this;
 		}
-		renderer& render_line(int x1, int y1, int x2, int y2) {
-			SDL_RenderDrawLine(_renderer, x1, y1, x2, y2);
-			return *this;
+		template<class T>
+		const renderer& render_line(upoint<T> origin, upoint<T> end) const {
+			return render_line(origin.x, origin.y, end.x, end.y);
 		}
-		renderer& present() {
+		const renderer& present() const {
 			SDL_RenderPresent(_renderer);
 			return *this;
 		}
-		renderer& poll() {
+		bool poll_quit() const {
 			SDL_Event event;
 			while (SDL_PollEvent(&event)) {
 				if (event.type == SDL_QUIT) {
-					done = true;
+					 return true;
 				}
 			}
-			return *this;
+			return false;
 		}
-		renderer& display(std::function<void(renderer&)> display_function) {
-			while (!done) {
+
+		bool done() const {
+			return _done;
+		}
+
+		renderer& display(std::function<void(const renderer&)> display_function) {
+			while (!_done) {
 				clear();
 				display_function(*this);
 				present();
-				poll();
+				_done = poll_quit();
 			}
 			return *this;
 		}

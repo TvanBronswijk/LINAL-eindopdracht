@@ -10,17 +10,24 @@ using namespace math;
 namespace render {
 	class graph {
 	private:
-		renderer& _re;
-		rectangle<int> _size;
-		float _scale;
+		const renderer& _re;
+		const rectangle _size;
+		int _scale;
 
-		point<float> to_grid_point(point<float> p) {
-			point<int> center = _size.center();
-			return { (center.x + (p.x * _scale)), (center.y + (-1* p.y * _scale)) };
+		template<class T>
+		point to_grid_point(upoint<T> p) {
+			point center = _size.center();
+			return { 
+				(center.x + ((int)(p.x * _scale))), 
+				(center.y + ((int)(p.y * _scale) * -1)) 
+			};
 		};
+		point origin() {
+			return to_grid_point<int>({ 0, 0 });
+		}
 	public:
-		graph(renderer& renderer, rectangle<int> size, float scale = 16.0f) : _re(renderer), _size(size), _scale(scale) {}
-		void draw(color c = C_GRAY, bool zero_flag = true, color zero_c = C_BLACK) {
+		graph(const renderer& renderer, rectangle size, int scale = 16) : _re(renderer), _size(size), _scale(scale) {}
+		void draw(color c = colors::GRAY, bool zero_flag = true, color zero_c = colors::BLACK) {
 			_re.set_color(c);
 			//vertical
 			for (int x = _size.x1; x < _size.x2; x += _scale)
@@ -30,49 +37,47 @@ namespace render {
 				_re.render_line(_size.x1, y, _size.x2, y);
 
 			if (zero_flag) {
-				point<float> center = to_grid_point({ 0.0f, 0.0f });
+				point center = origin();
 				_re
 					.set_color(zero_c)
 					.render_line(center.x, _size.y1, center.x, _size.y2)
 					.render_line(_size.x1, center.y, _size.x2, center.y)
-					.set_color(C_WHITE);
+					.set_color(colors::WHITE);
 			}
 		}
-		void draw_vector(vector<float> v) {
-			point<float> center = to_grid_point({0.0f, 0.0f});
-			point<float> end = to_grid_point({v.x, v.y});
-			_re.render_line(center.x, center.y, end.x, end.y);
+		template<class T>
+		void draw_vector(uvector2d<T> v) {
+			point start = this->origin();
+			point end = to_grid_point<T>({v.x, v.y});
+			_re.render_line(start, end);
 		}
-		void draw_vector(vector<float> v, color c) {
+		template<class T>
+		void draw_vector(uvector2d<T> v, color c) {
 			_re.set_color(c);
 			draw_vector(v);
-			_re.set_color(C_WHITE);
+			_re.set_color(colors::WHITE);
 		}
-		void draw_matrix(matrix<float> m) {
+		template<class T>
+		void draw_matrix(umatrix<T> m) {
 			assert(m.rows() == 2);
 			for (size_t i = 0; i < m.columns(); ++i) {
-				if (i <= 0) {
-					auto point_a = to_grid_point({ m(0, i), m(1, i) });
-					auto point_b = to_grid_point({ m(0, m.columns() - 1), m(1, m.columns() -1 ) });
-					_re.render_line(point_a.x, point_a.y, point_b.x, point_b.y);
-				}
-				else if (i < m.columns()-1) {
-					auto point_a = to_grid_point({ m(0, i), m(1, i) });
-					auto point_b = to_grid_point({ m(0, 0), m(1, 0) });
-					_re.render_line(point_a.x, point_a.y, point_b.x, point_b.y);
+				point start, end;
+				if (i == m.columns()-1) {
+					start = to_grid_point<T>({ m(0, i), m(1, i) });
+					end = to_grid_point<T>({ m(0, 0), m(1, 0) });
 				}
 				else {
-					auto point_a = to_grid_point({ m(0, i - 1), m(1, i - 1) });
-					auto point_b = to_grid_point({ m(0, i),		m(1, i) });
-					_re.render_line(point_a.x, point_a.y, point_b.x, point_b.y);
+					start = to_grid_point<T>({ m(0, i), m(1, i) });
+					end = to_grid_point<T>({ m(0, i+1),	m(1, i+1) });
 				}
+				_re.render_line(start, end);
 			}
 		}
-
-		void draw_matrix(matrix<float> m, color c) {
+		template<class T>
+		void draw_matrix(umatrix<T> m, color c) {
 			_re.set_color(c);
 			draw_matrix(m);
-			_re.set_color(C_WHITE);
+			_re.set_color(colors::WHITE);
 		}
 
 		~graph() = default;

@@ -3,10 +3,21 @@
 #include <vector>
 
 namespace math {
+	//PI
+	constexpr float pi = 3.14159265358979323846f;
+
 	//Scalar
 	template<class T>
 	using uscalar = T;
 	using scalar = uscalar<float>;
+
+	//Radial
+	template<class T>
+	using uradian = T;
+	using radian = uradian<float>;
+
+	template<class T>
+	uradian<T> deg_to_rad(T deg) { return deg * (pi / 180.0f); };
 
 	//Vector
 	template<class T>
@@ -144,17 +155,92 @@ namespace math {
 		umatrix<T> result(l.rows(), r.columns());
 		for (size_t ri = 0; ri < result.rows(); ri++) {
 			for (size_t ci = 0; ci < result.columns(); ci++) {
-				T lrow = 1;
+				T num = 0;
 				for (size_t i = 0; i < l.columns(); i++)
-					lrow *= l(ri, i);
-				T rcol = 1;
-				for (size_t i = 0; i < l.columns(); i++)
-					rcol *= r(i, ci);
-				result(ri, ci) = lrow + rcol;
+					num += l(ri, i) * r(i, ci);
+				result(ri, ci) = num;
 			}
 		}
 		return result;
 	}
+
+	template<class T>
+	umatrix<T> scale(T sx, T sy) {
+		return umatrix<T>{{
+			{sx, 0,  0},
+			{0,  sy, 0},
+			{0,  0,  1}
+		}};
+	}
+	template<class T>
+	umatrix<T> scale(const uvector2d<T>& sv) { return scale(sv.x, sv.y); }
+	template<class T>
+	umatrix<T>& scale(umatrix<T>& m, T sx, T sy) {
+		umatrix<T> sm = {{
+			{sx, 0,  0},
+			{0,  sy, 0},
+			{0,  0,  1}
+		}};
+		m = sm * m;
+		return m;
+	}
+	template<class T>
+	umatrix<T>& scale(umatrix<T>& m, const uvector2d<T>& sv) { return scale(m, sv.x, sv.y); }
+
+	template<class T>
+	umatrix<T> translate(T tx, T ty) {
+		return umatrix<T>{{
+			{1,  0, tx},
+			{0,  1, ty},
+			{0,  0,  1}
+		}};
+	}
+	template<class T>
+	umatrix<T> translate(const uvector2d<T>& tv) { return translate(tv.x, tv.y); }
+	template<class T>
+	umatrix<T>& translate(umatrix<T>& m, T tx, T ty) {
+		umatrix<T> tm = {{
+			{1,  0, tx},
+			{0,  1, ty},
+			{0,  0,  1}
+		}};
+		m = tm * m;
+		return m;
+	}
+	template<class T>
+	umatrix<T>& translate(umatrix<T>& m, const uvector2d<T>& tv) { return translate(m, tv.x, tv.y); }
+
+	template<class T>
+	umatrix<T>& rotate(umatrix<T>& m, T deg) {
+		uradian<T> rad = deg_to_rad(deg);
+		umatrix<T> rm = { {
+			{cos(rad),  sin(rad), 0},
+			{-sin(rad),  cos(rad), 0},
+			{0,  0, 1}
+		} };
+		m = rm * m;
+		return m;
+	}
+
+	template<class T>
+	umatrix<T>& rotate(umatrix<T>& m, T deg, T ox, T oy) {
+		uradian<T> rad = deg_to_rad(deg);
+		translate(m, -ox, -oy);
+		umatrix<T> rm = { {
+			{cos(rad),  sin(rad), 0},
+			{-sin(rad),  cos(rad), 0},
+			{0,  0, 1}
+		} };
+		m = rm * m;
+		translate(m, ox, oy);
+		return m;
+	}
+
+	template<class T>
+	umatrix<T>& rotate(umatrix<T>& m, T deg, uvector2d<T> ov) {
+		return rotate(m, deg, ov.x, ov.y);
+	}
+
 
 	using matrix = umatrix<float>;
 }

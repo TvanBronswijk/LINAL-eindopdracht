@@ -10,6 +10,7 @@ namespace render {
 		SDL_Window* _window;
 		SDL_Renderer* _renderer;
 		bool _done;
+		int _delta;
 	public:
 		renderer(int w, int h) : _window(NULL), _renderer(NULL) {
 			_done = !(SDL_Init(SDL_INIT_VIDEO) == 0 && SDL_CreateWindowAndRenderer(w, h, 0, &_window, &_renderer) == 0);
@@ -46,6 +47,12 @@ namespace render {
 			SDL_RenderPresent(_renderer);
 			return *this;
 		}
+		int delta() {
+			int now = SDL_GetTicks();
+			int delta = now - _delta;
+			_delta = now;
+			return delta;
+		}
 		bool poll_quit() const {
 			SDL_Event event;
 			while (SDL_PollEvent(&event)) {
@@ -55,15 +62,13 @@ namespace render {
 			}
 			return false;
 		}
-
 		bool done() const {
 			return _done;
 		}
-
-		renderer& display(std::function<void(const renderer&)> display_function) {
+		renderer& display(std::function<void(const renderer&, int)> display_function) {
 			while (!_done) {
 				clear();
-				display_function(*this);
+				display_function(*this, delta());
 				present();
 				_done = poll_quit();
 			}

@@ -59,7 +59,7 @@ namespace render {
 		}
 		template<class T>
 		void draw_matrix(umatrix<T> m) {
-			assert(m.rows() == 2);
+			assert(m.rows() == 3);
 			for (size_t i = 0; i < m.columns(); ++i) {
 				point start, end;
 				if (i == m.columns()-1) {

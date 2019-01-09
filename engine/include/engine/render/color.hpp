@@ -2,8 +2,10 @@
 
 namespace render {
 	struct color {
-		int r, g, b;
-		color(int r, int g, int b) : r(r), g(g), b(b) {}
+		int r, g, b, a;
+		color() : r(0), g(0), b(0), a(255) {}
+		color(int r, int g, int b) : r(r), g(g), b(b), a(255) {}
+		color(int r, int g, int b, int a) : r(r), g(g), b(b), a(a) {}
 		~color() = default;
 	};
 

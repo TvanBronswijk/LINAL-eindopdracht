@@ -27,12 +27,12 @@ namespace render {
 		const renderer& clear(color c = colors::WHITE) const {
 			return clear(c.r, c.g, c.b);
 		}
-		const renderer& set_color(int r, int g, int b) const {
-			SDL_SetRenderDrawColor(_renderer, r, g, b, SDL_ALPHA_OPAQUE);
+		const renderer& set_color(int r, int g, int b, int a = SDL_ALPHA_OPAQUE) const {
+			SDL_SetRenderDrawColor(_renderer, r, g, b, a);
 			return *this;
 		}
 		const renderer& set_color(color c = colors::BLACK) const {
-			return set_color(c.r, c.g, c.b);
+			return set_color(c.r, c.g, c.b, c.a);
 		}
 		const renderer& render_line(int x1, int y1, int x2, int y2) const {
 			if (SDL_RenderDrawLine(_renderer, x1, y1, x2, y2) != 0)

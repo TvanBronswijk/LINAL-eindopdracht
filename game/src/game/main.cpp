@@ -9,7 +9,7 @@ static const int WIDTH = 1280;
 static const int HEIGHT = 640;
 
 void demo() {
-	vector2d v1 = { -12.0f, -11.0f };
+	vector2D v1 = { -12.0f, -11.0f };
 
 	matrix m1 = {{
 		{0.0f,  0.0f, 5.0f, 5.0f, 2.5f},

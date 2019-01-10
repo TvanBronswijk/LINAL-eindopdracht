@@ -32,13 +32,17 @@ namespace math {
 		return tm;
 	}
 
-	template<class T> umatrix2D<T> rotate(const umatrix2D<T>& m, T deg) {
+	template<class T> umatrix2D<T> rotate(T deg) {
 		uradian<T> rad = deg_to_rad(deg);
-		umatrix2D<T> rm = umatrix2D<T>::multidimensional_constructor<3>{{
+		return umatrix2D<T>::multidimensional_constructor<3>{ {
 			{cos(rad),  sin(rad), 0},
 			{-sin(rad), cos(rad), 0},
 			{0,			0,		  1}
-		}};
+		} };
+	}
+
+	template<class T> umatrix2D<T> rotate(const umatrix2D<T>& m, T deg) {
+		umatrix2D<T> rm = rotate(deg);
 		rm = rm * m;
 		return rm;
 	}

@@ -28,6 +28,7 @@ target_include_directories(engine PUBLIC #because my include files have SDL refe
 )
 target_include_directories(engine PRIVATE "src")
 
+
 install(DIRECTORY include/engine
 	DESTINATION include/engine
 	FILES_MATCHING PATTERN "*.hpp"

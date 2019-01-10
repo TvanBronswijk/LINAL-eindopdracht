@@ -2,7 +2,8 @@
 #include "types.hpp"
 #include "vector2D.hpp"
 #include "vector3D.hpp"
-#include "matrix.hpp"
+#include "matrix2D.hpp"
+#include "matrix3D.hpp"
 
 namespace math {
 	using scalar = uscalar<float>;

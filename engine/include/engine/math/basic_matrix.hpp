@@ -99,7 +99,4 @@ namespace math {
 		}
 		return result;
 	}
-
-	template<class T> using umatrix2D = umatrix<T, 3>;
-	template<class T> using umatrix3D = umatrix<T, 4>;
 }

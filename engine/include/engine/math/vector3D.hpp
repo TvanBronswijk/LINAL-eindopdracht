@@ -1,5 +1,6 @@
 #pragma once
 #include "types.hpp"
+#include "vector2D.hpp"
 
 namespace math {
 	template<class T>
@@ -7,6 +8,7 @@ namespace math {
 		T x, y, z;
 		uvector3D() : x(T(0)), y(T(0)), z(T(0)) {};
 		uvector3D(T x, T y, T z) : x(x), y(y), z(z) {};
+		uvector3D(uvector2D<T> v, T z) : x(v.x), y(.y), z(z) {};
 		~uvector3D() = default;
 		uvector3D<T>& operator+=(const uvector3D<T>& r) { x += r.x; y += r.y; z += r.z; return *this; }
 		uvector3D<T>& operator-=(const uvector3D<T>& r) { x -= r.x; y -= r.y; z -= r.z; return *this; }

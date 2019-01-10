@@ -17,7 +17,7 @@ namespace math {
 	};
 	template<class T> uvector3D<T> operator + (const uvector3D<T>& l, const uvector3D<T>& r) { return { l.x + r.x, l.y + r.y, l.z + r.z }; };
 	template<class T> uvector3D<T> operator - (const uvector3D<T>& l, const uvector3D<T>& r) { return { l.x - r.x, l.y - r.y, l.z - r.z }; };
-	template<class T> uvector3D<T> operator * (const uscalar<T>& s, const uvector3D<T>& v) { return { s*v.x, s*v.y, s*v.z }; };
-	template<class T> uvector3D<T> operator * (const uvector3D<T>& v, const uscalar<T>& s) { return { v.x*s, v.y*s, v.z*s }; };
-	template<class T> uvector3D<T> operator / (const uvector3D<T>& v, const uscalar<T>& s) { return { v.x / s, v.y / s, v.z / s }; };
+	template<class T> uvector3D<T> operator * (uscalar<T> s, const uvector3D<T>& v) { return { s*v.x, s*v.y, s*v.z }; };
+	template<class T> uvector3D<T> operator * (const uvector3D<T>& v, uscalar<T> s) { return { v.x*s, v.y*s, v.z*s }; };
+	template<class T> uvector3D<T> operator / (const uvector3D<T>& v, uscalar<T> s) { return { v.x / s, v.y / s, v.z / s }; };
 }

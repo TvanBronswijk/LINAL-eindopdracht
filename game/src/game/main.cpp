@@ -25,7 +25,7 @@ void demo() {
 			graph.draw();
 			graph.draw_vector(v1, colors::RED);
 			graph.draw_matrix(m1, colors::BLUE);
-			m1 = translate(scale(rotate(m1, ((float)dt / 10.0f)), { 1.001f, 1.0f }), {0.01f, 0.01f});
+			m1 = rotate(m1, ((float)dt / 10.0f));
 		});
 	}
 	catch (int e) {

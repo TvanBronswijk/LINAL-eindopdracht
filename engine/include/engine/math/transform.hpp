@@ -6,7 +6,7 @@
 
 namespace math {
 	template<class T>
-	umatrix<T> scale(T sx, T sy) {
+	umatrix2D<T> scale(T sx, T sy) {
 		return umatrix<T>{ {
 			{sx, 0, 0},
 			{ 0,  sy, 0 },
@@ -14,9 +14,9 @@ namespace math {
 			}};
 	}
 	template<class T>
-	umatrix<T> scale(const uvector2D<T>& sv) { return scale(sv.x, sv.y); }
+	umatrix2D<T> scale(const uvector2D<T>& sv) { return scale(sv.x, sv.y); }
 	template<class T>
-	umatrix<T>& scale(umatrix<T>& m, T sx, T sy) {
+	umatrix2D<T>& scale(umatrix2D<T>& m, T sx, T sy) {
 		umatrix<T> sm = { {
 			{sx, 0,  0},
 			{0,  sy, 0},
@@ -26,10 +26,10 @@ namespace math {
 		return m;
 	}
 	template<class T>
-	umatrix<T>& scale(umatrix<T>& m, const uvector2D<T>& sv) { return scale(m, sv.x, sv.y); }
+	umatrix2D<T>& scale(umatrix2D<T>& m, const uvector2D<T>& sv) { return scale(m, sv.x, sv.y); }
 
 	template<class T>
-	umatrix<T> translate(T tx, T ty) {
+	umatrix2D<T> translate(T tx, T ty) {
 		return umatrix<T>{ {
 			{1, 0, tx},
 			{ 0,  1, ty },
@@ -37,9 +37,9 @@ namespace math {
 			}};
 	}
 	template<class T>
-	umatrix<T> translate(const uvector2D<T>& tv) { return translate(tv.x, tv.y); }
+	umatrix2D<T> translate(const uvector2D<T>& tv) { return translate(tv.x, tv.y); }
 	template<class T>
-	umatrix<T>& translate(umatrix<T>& m, T tx, T ty) {
+	umatrix2D<T>& translate(umatrix2D<T>& m, T tx, T ty) {
 		umatrix<T> tm = { {
 			{1,  0, tx},
 			{0,  1, ty},
@@ -49,22 +49,22 @@ namespace math {
 		return m;
 	}
 	template<class T>
-	umatrix<T>& translate(umatrix<T>& m, const uvector2D<T>& tv) { return translate(m, tv.x, tv.y); }
+	umatrix2D<T>& translate(umatrix2D<T>& m, const uvector2D<T>& tv) { return translate(m, tv.x, tv.y); }
 
 	template<class T>
-	umatrix<T>& rotate(umatrix<T>& m, T deg) {
+	umatrix2D<T>& rotate(umatrix2D<T>& m, T deg) {
 		uradian<T> rad = deg_to_rad(deg);
-		umatrix<T> rm = { {
+		umatrix2D<T> rm = umatrix2D<T>::multidimensional_constructor<3>{{
 			{cos(rad),  sin(rad), 0},
 			{-sin(rad),  cos(rad), 0},
 			{0,  0, 1}
-		} };
+		}};
 		m = rm * m;
 		return m;
 	}
 
 	template<class T>
-	umatrix<T>& rotate(umatrix<T>& m, T deg, T ox, T oy) {
+	umatrix2D<T>& rotate(umatrix2D<T>& m, T deg, T ox, T oy) {
 		uradian<T> rad = deg_to_rad(deg);
 		translate(m, -ox, -oy);
 		umatrix<T> rm = { {
@@ -78,7 +78,7 @@ namespace math {
 	}
 
 	template<class T>
-	umatrix<T>& rotate(umatrix<T>& m, T deg, uvector2D<T> ov) {
+	umatrix2D<T>& rotate(umatrix2D<T>& m, T deg, uvector2D<T> ov) {
 		return rotate(m, deg, ov.x, ov.y);
 	}
 }

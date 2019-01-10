@@ -1,102 +1,94 @@
 #pragma once
 #include <cassert>
 #include <vector>
-#include "vector2D.hpp"
+#include <array>
 
 namespace math {
-	template<class T>
+	template<class T, size_t Rows>
 	struct umatrix {
-		template<class T>
-		using matrix_collection = std::vector<std::vector<T>>;
-	private:
-		size_t _r;
-		size_t _c;
-		std::vector<T> _arr;
 	public:
-		umatrix(matrix_collection<T> matrix)
-			: umatrix(matrix.size(), matrix[0].size(), matrix) {}
-		umatrix(size_t rows, size_t columns, matrix_collection<T> matrix)
-			: umatrix(rows, columns) {
-			for (size_t ri = 0; ri < rows; ri++)
-				for (size_t ci = 0; ci < columns; ci++)
-					at(ri, ci) = matrix[ri][ci];
+		template<size_t Columns> using multidimensional_constructor = std::array<std::array<T, Columns>, Rows>;
+		template<size_t Columns> umatrix(multidimensional_constructor<Columns> matrix) : umatrix(Columns) {
+			for (int xi = 0; xi < Rows; xi++)
+				for (int yi = 0; yi < Columns; yi++)
+					this->at(xi, yi) = matrix[xi][yi];
 		}
-		umatrix(size_t rows, size_t columns)
-			: _r(rows), _c(columns), _arr(std::vector<T>(rows*columns)) {
-			assert(rows > 0);
-			assert(columns > 0);
-		}
+		umatrix(size_t columns) : _rows(Rows), _columns(columns), _collection(std::vector<T>(Rows*columns)) { assert(Rows > 0); assert(columns > 0); }
 		~umatrix() = default;
-		size_t rows() const { return _r; }
-		size_t columns() const { return _c; }
-		T& at(size_t r, size_t c) { return _arr[r * _c + c]; }
-		const T& at(size_t r, size_t c) const { return _arr[r * _c + c]; }
+		size_t rows() const { return _rows; }
+		size_t columns() const { return _columns; }
+		T& at(size_t r, size_t c) { return _collection[r * columns() + c]; }
+		const T& at(size_t r, size_t c) const { return _collection[r * columns() + c]; }
 		T& operator () (size_t r, size_t c) { return at(r, c); }
 		const T& operator () (size_t r, size_t c) const { return at(r, c); }
 
-		umatrix<T>& operator += (const umatrix<T>& r) {
-			assert(rows() == r.rows() && columns() == r.columns());
+		umatrix<T, Rows>& operator += (const umatrix<T, Rows>& r) {
+			assert(columns() == r.columns());
 			for (size_t ri = 0; ri < rows(); ri++)
 				for (size_t ci = 0; ci < columns(); ci++)
 					at(ri, ci) += r(ri, ci);
 			return *this;
 		}
-		umatrix<T>& operator -= (const umatrix<T>& r) {
-			assert(rows() == r.rows() && columns() == r.columns());
+		umatrix<T, Rows>& operator -= (const umatrix<T, Rows>& r) {
+			assert(columns() == r.columns());
 			for (size_t ri = 0; ri < rows(); ri++)
 				for (size_t ci = 0; ci < columns(); ci++)
 					at(ri, ci) -= r(ri, ci);
 			return *this;
 		}
-		umatrix<T>& operator *= (const uscalar<T>& r) {
+		umatrix<T, Rows>& operator *= (const uscalar<T>& r) {
 			for (size_t ri = 0; ri < rows(); ri++)
 				for (size_t ci = 0; ci < columns(); ci++)
 					at(ri, ci) *= r;
 			return *this;
 		}
+	private:
+		size_t _rows;
+		size_t _columns;
+		std::vector<T> _collection;
 	};
 
-	template<class T>
-	umatrix<T> operator + (const umatrix<T>& l, const umatrix<T>& r) {
-		assert(l.rows() == r.rows() && l.columns() == r.columns());
-		umatrix<T> result(l.rows(), r.columns());
+	template<class T, size_t Rows>
+	umatrix<T, Rows> operator + (const umatrix<T, Rows>& l, const umatrix<T, Rows>& r) {
+		assert(l.columns() == r.columns());
+		umatrix<T, Rows> result(r.columns());
 		for (size_t ri = 0; ri < result.rows(); ri++)
 			for (size_t ci = 0; ci < result.columns(); ci++)
 				result(ri, ci) = l(ri, ci) + r(ri, ci);
 		return result;
 	}
 
-	template<class T>
-	umatrix<T> operator - (const umatrix<T>& l, const umatrix<T>& r) {
-		assert(l.rows() == r.rows() && l.columns() == r.columns());
-		umatrix<T> result(l.rows(), r.columns());
+	template<class T, size_t Rows>
+	umatrix<T, Rows> operator - (const umatrix<T, Rows>& l, const umatrix<T, Rows>& r) {
+		assert(l.columns() == r.columns());
+		umatrix<T, Rows> result(r.columns());
 		for (size_t ri = 0; ri < result.rows(); ri++)
 			for (size_t ci = 0; ci < result.columns(); ci++)
 				result(ri, ci) = l(ri, ci) - r(ri, ci);
 		return result;
 	}
 
-	template<class T>
-	umatrix<T> operator * (const uscalar<T>& l, const umatrix<T>& r) {
-		umatrix<T> result(r.rows(), r.columns());
+	template<class T, size_t Rows>
+	umatrix<T, Rows> operator * (const uscalar<T>& l, const umatrix<T, Rows>& r) {
+		umatrix<T, Rows> result(r.columns());
 		for (size_t ri = 0; ri < result.rows(); ri++)
 			for (size_t ci = 0; ci < result.columns(); ci++)
 				result(ri, ci) = l * r(ri, ci);
 		return result;
 	}
 
-	template<class T>
-	umatrix<T> operator * (const umatrix<T>& l, const uscalar<T>& r) {
-		umatrix<T> result(l.rows(), l.columns());
+	template<class T, size_t Rows>
+	umatrix<T, Rows> operator * (const umatrix<T, Rows>& l, const uscalar<T>& r) {
+		umatrix<T, Rows> result(l.columns());
 		for (size_t ri = 0; ri < result.rows(); ri++)
 			for (size_t ci = 0; ci < result.columns(); ci++)
 				result(ri, ci) = l(ri, ci) * r;
 		return result;
 	}
 
-	template<class T>
-	umatrix<T> operator * (const umatrix<T>& l, const umatrix<T>& r) {
-		umatrix<T> result(l.rows(), r.columns());
+	template<class T, size_t Rows>
+	umatrix<T, Rows> operator * (const umatrix<T, Rows>& l, const umatrix<T, Rows>& r) {
+		umatrix<T, Rows> result(r.columns());
 		for (size_t ri = 0; ri < result.rows(); ri++) {
 			for (size_t ci = 0; ci < result.columns(); ci++) {
 				T num = 0;
@@ -108,5 +100,6 @@ namespace math {
 		return result;
 	}
 
-	using matrix = umatrix<float>;
+	template<class T> using umatrix2D = umatrix<T, 3>;
+	template<class T> using umatrix3D = umatrix<T, 4>;
 }

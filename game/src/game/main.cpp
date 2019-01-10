@@ -11,7 +11,7 @@ static const int HEIGHT = 640;
 void demo() {
 	vector2D v1 = { -12.0f, -11.0f };
 
-	matrix m1 = {{
+	matrix2D m1 = matrix2D::multidimensional_constructor<5>{{
 		{0.0f,  0.0f, 5.0f, 5.0f, 2.5f},
 		{0.0f,  5.0f, 5.0f, 0.0f, 2.5f},
 		{1.0f,  1.0f,  1.0f,  1.0f, 1.0f}

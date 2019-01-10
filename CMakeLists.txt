@@ -1,4 +1,11 @@
+cmake_policy(SET CMP0048 NEW)
 cmake_minimum_required(VERSION 3.8)
+
+# Enable testing for the project
+enable_testing()
+
+add_subdirectory(tests)
+
 
 if(MSVC)
   set(SDL2_DIR "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/SDL2")

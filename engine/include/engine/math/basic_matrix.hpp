@@ -5,7 +5,6 @@
 #include <array>
 
 namespace math {
-	//TODO: multiply with vector
 	template<class T, size_t Rows>
 	struct umatrix {
 	public:

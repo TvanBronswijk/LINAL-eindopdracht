@@ -21,9 +21,9 @@ namespace math {
 
 	template<class T> umatrix2D<T> translate(uvector2D<T> tv) {
 		return umatrix2D<T>::multidimensional_constructor<3>{{
-			{ 1, 0, tx },
-			{ 0, 1, ty },
-			{ 0, 0, 1  }
+			{ 1, 0, tv.x },
+			{ 0, 1, tv.y },
+			{ 0, 0, 1    }
 		}};
 	}
 	template<class T> umatrix2D<T> translate(const umatrix2D<T>& m, uvector2D<T> tv) {

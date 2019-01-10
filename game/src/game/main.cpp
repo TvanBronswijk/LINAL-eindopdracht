@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <engine/math.hpp>
 #include <engine/render.hpp>
 
@@ -24,11 +25,11 @@ void demo() {
 			graph.draw();
 			graph.draw_vector(v1, colors::RED);
 			graph.draw_matrix(m1, colors::BLUE);
-			m1 = rotate(m1, ((float)dt / 10.0f));
+			m1 = translate(scale(rotate(m1, ((float)dt / 10.0f)), { 1.001f, 1.0f }), {0.01f, 0.01f});
 		});
 	}
 	catch (int e) {
-		std::cout << "The program quit unexpectedly." << std::endl;
+		std::cout << "The program quit unexpectedly. ERROR " << std::to_string(e) << std::endl;
 		char a;
 		std::cin >> a;
 	}

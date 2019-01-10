@@ -57,9 +57,8 @@ namespace render {
 			draw_vector(v);
 			_re.set_color(colors::WHITE);
 		}
-		template<class T>
-		void draw_matrix(umatrix2D<T> m) {
-			assert(m.rows() == 3);
+		template<class T, size_t Rows>
+		void draw_matrix(umatrix<T, Rows> m) {
 			for (size_t i = 0; i < m.columns(); ++i) {
 				point start, end;
 				if (i == m.columns()-1) {
@@ -73,8 +72,8 @@ namespace render {
 				_re.render_line(start, end);
 			}
 		}
-		template<class T>
-		void draw_matrix(umatrix2D<T> m, color c) {
+		template<class T, size_t Rows>
+		void draw_matrix(umatrix<T, Rows> m, color c) {
 			_re.set_color(c);
 			draw_matrix(m);
 			_re.set_color(colors::WHITE);

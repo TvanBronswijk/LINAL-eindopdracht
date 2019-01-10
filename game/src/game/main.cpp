@@ -10,22 +10,30 @@ static const int WIDTH = 1280;
 static const int HEIGHT = 640;
 
 void demo() {
-	vector2D v1 = { -12.0f, -11.0f };
+	vector3D rotation = { 3.0f, 3.0f, 9.0f };
+	matrix3D model = matrix3D::multidimensional_constructor<10>{{
+		{0.0f, 0.0f, 2.0f, 1.0f, 0.0f, 1.0f, 2.0f, 0.0f, 2.0f, 1.0f},
+		{2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 1.0f},
+		{0.0f, 2.0f, 0.0f, 1.0f, 2.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f},
+		{0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}
+	}};
 
-	matrix2D m1 = matrix2D::multidimensional_constructor<5>{{
-		{0.0f,  0.0f, 5.0f, 5.0f, 2.5f},
-		{0.0f,  5.0f, 5.0f, 0.0f, 2.5f},
-		{1.0f,  1.0f,  1.0f,  1.0f, 1.0f}
+	matrix3D circle = matrix3D::multidimensional_constructor<3>{{
+		{1.0f, 0.0f, -3.0f},
+		{0.0f, 1.0f, -3.0f},
+		{-3.0f, -3.0f, -9.0f},
+		{0.0f, 0.0f, 0.0f}
 	}};
 
 	try {
 		renderer(WIDTH, HEIGHT)
 			.display([&](const renderer& r, int dt) {
-			graph graph(r, { 0, 0, WIDTH, HEIGHT });
-			graph.draw();
-			graph.draw_vector(v1, colors::RED);
-			graph.draw_matrix(m1, colors::BLUE);
-			m1 = rotate(m1, ((float)dt / 10.0f));
+			graph g{ r, rectangle{0, 0, WIDTH, HEIGHT} };
+			g.draw();
+			g.draw_matrix(model, colors::BLUE);
+			g.draw_matrix(circle, colors::RED);
+			circle = rotate(circle, rotation);
+			model = rotate(model, rotation);
 		});
 	}
 	catch (int e) {

@@ -4,8 +4,7 @@
 #include "matrix2D.hpp"
 
 namespace math {
-	template<class T>
-	umatrix2D<T> scale(uvector2D<T> sv) {
+	template<class T> umatrix2D<T> scale(uvector2D<T> sv) {
 		return umatrix2D<T>::multidimensional_constructor<3>{{
 			{ sv.x, 0,    0 },
 			{ 0,    sv.y, 0 },

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace render {
+namespace rendering {
 	template<class T>
 	struct upoint {
 		T x, y;

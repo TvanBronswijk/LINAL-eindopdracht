@@ -1,6 +1,8 @@
 #pragma once
 
-#include "render/color.hpp"
-#include "render/graph.hpp"
-#include "render/renderer.hpp"
-#include "render/util.hpp"
+#include "rendering/color.hpp"
+#include "rendering/renderer.hpp"
+#include "rendering/util.hpp"
+#include "rendering/3D/mesh.hpp"
+#include "rendering/3D/scene.hpp"
+#include "rendering/graphing/graph.hpp"

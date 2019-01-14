@@ -1,13 +1,13 @@
 #pragma once
 #include <cassert>
-#include "color.hpp"
-#include "renderer.hpp"
-#include "util.hpp"
+#include "engine/rendering/color.hpp"
+#include "engine/rendering/renderer.hpp"
+#include "engine/rendering/util.hpp"
 
 #include "engine/math.hpp"
 using namespace math;
 
-namespace render {
+namespace rendering::graphing {
 	class graph {
 	private:
 		const renderer& _re;
@@ -26,30 +26,13 @@ namespace render {
 			return to_grid_point<int>({ 0, 0 });
 		}
 	public:
-		graph(const renderer& renderer, rectangle size, int scale = 16) : _re(renderer), _size(size), _scale(scale) {}
-		void draw(color c = colors::GRAY, bool zero_flag = true, color zero_c = colors::BLACK) {
-			_re.set_color(c);
-			//vertical
-			for (int x = _size.x1; x < _size.x2; x += _scale)
-				_re.render_line(x, _size.y1, x, _size.y2);
-			//horizontal
-			for (int y = _size.y1; y < _size.y2; y += _scale)
-				_re.render_line(_size.x1, y, _size.x2, y);
-
-			if (zero_flag) {
-				point center = origin();
-				_re
-					.set_color(zero_c)
-					.render_line(center.x, _size.y1, center.x, _size.y2)
-					.render_line(_size.x1, center.y, _size.x2, center.y)
-					.set_color(colors::WHITE);
-			}
-		}
+		graph(const renderer& renderer, rectangle size, int scale = 16);
+		void draw(color c = colors::GRAY, bool zero_flag = true, color zero_c = colors::BLACK);
 		template<class T>
 		void draw_vector(uvector2D<T> v) {
 			point start = this->origin();
 			point end = to_grid_point<T>({v.x(), v.y()});
-			_re.render_line(start, end);
+			_re.render_line(start.x, start.y, end.x, end.y);
 		}
 		template<class T>
 		void draw_vector(uvector2D<T> v, color c) {
@@ -69,7 +52,7 @@ namespace render {
 					start = to_grid_point<T>({ m(0, i), m(1, i) });
 					end = to_grid_point<T>({ m(0, i+1),	m(1, i+1) });
 				}
-				_re.render_line(start, end);
+				_re.render_line(start.x, start.y, end.x, end.y);
 			}
 		}
 		template<class T, size_t Rows>

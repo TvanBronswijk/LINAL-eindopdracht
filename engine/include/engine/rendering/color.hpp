@@ -1,6 +1,6 @@
 #pragma once
 
-namespace render {
+namespace rendering {
 	struct color {
 		int r, g, b, a;
 		color() : r(0), g(0), b(0), a(255) {}

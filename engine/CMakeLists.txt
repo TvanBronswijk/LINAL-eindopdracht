@@ -11,6 +11,10 @@ endif(MSVC)
 
 add_library (engine STATIC
 	"src/engine/engine.cpp"
+	"src/engine/input/inputhandler.cpp"
+	"src/engine/rendering/renderer.cpp"
+	"src/engine/rendering/graphing/graph.cpp"
+	"src/engine/rendering/3D/mesh.cpp"
 )
 
 target_compile_features(engine PUBLIC cxx_std_17)

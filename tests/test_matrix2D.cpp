@@ -208,7 +208,7 @@ int foreach() {
 	{ 1.0f, 1.0f, 1.0f }
 	} };
 
-	//matrix_1.foreach(plus_one);
+	matrix_1.foreach([](auto& val) { val += 1; });
 
 	if (matrix_1.at(2, 2) != 2.0f || matrix_1.at(0, 0) != 2.0f) {
 		return 1;

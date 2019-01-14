@@ -48,7 +48,7 @@ namespace render {
 		template<class T>
 		void draw_vector(uvector2D<T> v) {
 			point start = this->origin();
-			point end = to_grid_point<T>({v.x, v.y});
+			point end = to_grid_point<T>({v.x(), v.y()});
 			_re.render_line(start, end);
 		}
 		template<class T>

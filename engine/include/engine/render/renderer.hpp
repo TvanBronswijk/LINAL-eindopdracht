@@ -51,9 +51,9 @@ namespace render {
 			_delta = now;
 			return delta;
 		}
-		renderer& display(std::function<void(const renderer&, int)> display_function) {
+		renderer& display(std::function<void(int)> display_function) {
 			clear();
-			display_function(*this, delta());
+			display_function(delta());
 			present();
 			return *this;
 		}

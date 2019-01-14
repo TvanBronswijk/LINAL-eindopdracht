@@ -1,27 +1,21 @@
 #pragma once
-#include "types.hpp"
-#include "vector2D.hpp"
+#include "basic_vector.hpp"
 
 namespace math {
 	template<class T>
-	struct uvector3D {
-		T x, y, z;
-		uvector3D() : x(T(0)), y(T(0)), z(T(0)) {};
-		uvector3D(T x, T y, T z) : x(x), y(y), z(z) {};
-		uvector3D(uvector2D<T> v, T z) : x(v.x), y(.y), z(z) {};
-		~uvector3D() = default;
-		uvector3D<T>& operator+=(const uvector3D<T>& r) { x += r.x; y += r.y; z += r.z; return *this; }
-		uvector3D<T>& operator-=(const uvector3D<T>& r) { x -= r.x; y -= r.y; z -= r.z; return *this; }
-		uvector3D<T>& operator*=(const uscalar<T>& r) { x *= r; y *= r; z *= r; return *this; }
-		uvector3D<T>& operator/=(const uscalar<T>& r) { x /= r; y /= r; z /= r; return *this; }
-		friend bool operator==(const uvector3D<T>&, const uvector3D<T>&);
-		friend bool operator!=(const uvector3D<T>&, const uvector3D<T>&);
+	struct uvector3D : public uvector<T, 4> {
+		uvector3D() : uvector{ T(0), T(0), T(0) } {};
+		uvector3D(T x, T y, T z) : uvector{ { x, y, z } } {};
+		T& x() { return _values[0]; }
+		const T& x() const { return _values[0]; }
+		T& y() { return _values[1]; }
+		const T& y() const { return _values[1]; }
+		T& z() { return _values[2]; }
+		const T& z() const { return _values[2]; }
+		T& w() { return _values[3]; }
+		const T& w() const { return _values[3]; }
 	};
-	template<class T> uvector3D<T> operator + (const uvector3D<T>& l, const uvector3D<T>& r) { return { l.x + r.x, l.y + r.y, l.z + r.z }; };
-	template<class T> uvector3D<T> operator - (const uvector3D<T>& l, const uvector3D<T>& r) { return { l.x - r.x, l.y - r.y, l.z - r.z }; };
-	template<class T> uvector3D<T> operator * (uscalar<T> s, const uvector3D<T>& v) { return { s*v.x, s*v.y, s*v.z }; };
-	template<class T> uvector3D<T> operator * (const uvector3D<T>& v, uscalar<T> s) { return { v.x*s, v.y*s, v.z*s }; };
-	template<class T> uvector3D<T> operator / (const uvector3D<T>& v, uscalar<T> s) { return { v.x / s, v.y / s, v.z / s }; };
-	template<class T> bool operator==(const uvector3D<T>& l, const uvector3D<T>& r) { return l.x == r.x && l.y == r.y && l.z == r.z; }
-	template<class T> bool operator!=(const uvector3D<T>& l, const uvector3D<T>& r) { return !(l == r); }
+
+	template<class T> uscalar<T> dot(const uvector3D<T>& l, const uvector3D<T>& r) { return l.x()*r.x() + l.y()*r.y() + l.z()*r.z(); }
+	template<class T> uvector3D<T> cross(const uvector3D<T>& l, const uvector3D<T>& r) { return {l.y()*r.z() - l.z()*r.y(), l.z()*r.x() - l.x()*r.z(), l.x()*r.y() - l.y()*r.x()}; }
 }

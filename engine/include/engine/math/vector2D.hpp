@@ -1,25 +1,17 @@
 #pragma once
-#include "types.hpp"
+#include "basic_vector.hpp"
 
 namespace math {
 	template<class T>
-	struct uvector2D {
-		T x, y;
-		uvector2D() : x(T(0)), y(T(0)) {};
-		uvector2D(T x, T y) : x(x), y(y) {};
+	struct uvector2D : public uvector<T, 3> {
+		uvector2D() : uvector{T(0), T(0)} {};
+		uvector2D(T x, T y) : uvector{ {x, y} } {};
+		T& x() { return _values[0]; }
+		const T& x() const { return _values[0]; }
+		T& y() { return _values[1]; }
+		const T& y() const { return _values[1]; }
+		T& w() { return _values[2]; }
+		const T& w() const { return _values[2]; }
 		~uvector2D() = default;
-		uvector2D<T>& operator+=(const uvector2D<T>& r) { x += r.x; y += r.y; return *this; }
-		uvector2D<T>& operator-=(const uvector2D<T>& r) { x -= r.x; y -= r.y; return *this; }
-		uvector2D<T>& operator*=(uscalar<T> r) { x *= r; y *= r; return *this; }
-		uvector2D<T>& operator/=(uscalar<T> r) { x /= r; y /= r; return *this; }
-		friend bool operator==(const uvector2D<T>&, const uvector2D<T>&);
-		friend bool operator!=(const uvector2D<T>&, const uvector2D<T>&);
 	};
-	template<class T> uvector2D<T> operator + (const uvector2D<T>& l, const uvector2D<T>& r) { return { l.x + r.x, l.y + r.y }; };
-	template<class T> uvector2D<T> operator - (const uvector2D<T>& l, const uvector2D<T>& r) { return { l.x - r.x, l.y - r.y }; };
-	template<class T> uvector2D<T> operator * (uscalar<T> s, const uvector2D<T>& v) { return { s*v.x, s*v.y }; };
-	template<class T> uvector2D<T> operator * (const uvector2D<T>& v, uscalar<T> s) { return { v.x*s, v.y*s }; };
-	template<class T> uvector2D<T> operator / (const uvector2D<T>& v, uscalar<T> s) { return { v.x/s, v.y/s }; };
-	template<class T> bool operator==(const uvector2D<T>& l, const uvector2D<T>& r) { return l.x == r.x && l.y == r.y; }
-	template<class T> bool operator!=(const uvector2D<T>& l, const uvector2D<T>& r) { return !(l == r); }
 }

@@ -3,6 +3,7 @@
 #include <functional>
 #include <vector>
 #include <array>
+#include "basic_vector.hpp"
 
 namespace math {
 	template<class T, size_t Rows>
@@ -77,14 +78,21 @@ namespace math {
 		return result;
 	}
 
-	template<class T, size_t Rows> umatrix<T, Rows> operator * (const umatrix<T, Rows>& l, const umatrix<T, Rows>& r) {
-		umatrix<T, Rows> result(r.columns());
+	template<class T, size_t LRows, size_t RRows> umatrix<T, LRows> operator * (const umatrix<T, LRows>& l, const umatrix<T, RRows>& r) {
+		umatrix<T, LRows> result(r.columns());
 		result.foreach([&](auto& val, auto ri, auto ci) { 
-			T num = T(0);
+			val = T(0);
 			for (size_t i = 0; i < l.columns(); i++)
-				num += l(ri, i) * r(i, ci);
-			val = num;
+				val += l(ri, i) * r(i, ci);
 		});
+		return result;
+	}
+
+	template<class T, size_t Rows> uvector<T, Rows> operator * (const umatrix<T, Rows>& l, const uvector<T, Rows>& r) {
+		uvector<T, Rows> result(r);
+		for (int ri = 0; ri < l.rows(); ri++)
+			for (int ci = 0; ci < l.rows(); ci++)
+				result[ri] += (l(ri, ci) * result[ci]);
 		return result;
 	}
 }

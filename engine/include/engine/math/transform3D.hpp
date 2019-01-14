@@ -6,9 +6,9 @@
 namespace math {
 	template<class T> umatrix3D<T> scale(uvector3D<T> sv) {
 		return umatrix3D<T>::multidimensional_constructor<4>{ {
-			{ sv.x, 0, 0, 0},
-			{ 0,    sv.y, 0,    0 },
-			{ 0,    0,    sv.z, 0 },
+			{ sv.x(), 0, 0, 0},
+			{ 0,    sv.y(), 0,    0 },
+			{ 0,    0,    sv.z(), 0 },
 			{ 0,    0,    0,    1 }
 			}};
 	}
@@ -21,9 +21,9 @@ namespace math {
 
 	template<class T> umatrix3D<T> translate(uvector3D<T> tv) {
 		return umatrix3D<T>::multidimensional_constructor<4>{ {
-			{ 1, 0, 0, tv.x },
-			{ 0, 1, 0, tv.y },
-			{ 0, 0, 1, tv.z },
+			{ 1, 0, 0, tv.x() },
+			{ 0, 1, 0, tv.y() },
+			{ 0, 0, 1, tv.z() },
 			{ 0, 0, 0, 1 }
 			}};
 	}
@@ -33,10 +33,10 @@ namespace math {
 		return tm;
 	}
 
-	template<class T> umatrix3D<T> rotate(uvector3D<T> dv) { //TODO
-		uradian<T> xrad = deg_to_rad(dv.x);
-		uradian<T> yrad = deg_to_rad(dv.y);
-		uradian<T> zrad = deg_to_rad(dv.z);
+	template<class T> umatrix3D<T> rotate(uvector3D<T> dv) {
+		uradian<T> xrad = deg_to_rad(dv.x());
+		uradian<T> yrad = deg_to_rad(dv.y());
+		uradian<T> zrad = deg_to_rad(dv.z());
 
 		umatrix3D<T> xrot = umatrix3D<T>::multidimensional_constructor<4>{ {
 			{ 1, 0, 0, 0 },

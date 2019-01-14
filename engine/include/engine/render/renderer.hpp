@@ -9,19 +9,17 @@ namespace render {
 	private:
 		SDL_Window* _window;
 		SDL_Renderer* _renderer;
-		bool _done;
 		int _delta;
 	public:
 		renderer(int w, int h) : _window(NULL), _renderer(NULL) {
-			_done = !(SDL_Init(SDL_INIT_VIDEO) == 0 && SDL_CreateWindowAndRenderer(w, h, 0, &_window, &_renderer) == 0);
-			if(_done)
-				throw -1;
+			if (!(SDL_Init(SDL_INIT_VIDEO) == 0 && SDL_CreateWindowAndRenderer(w, h, 0, &_window, &_renderer) == 0))
+				throw - 1;
 		};
 
 		const renderer& clear(int r, int g, int b) const {
 			SDL_SetRenderDrawColor(_renderer, r, g, b, SDL_ALPHA_OPAQUE);
 			if (SDL_RenderClear(_renderer) != 0)
-				throw -1;
+				throw - 1;
 			return *this;
 		}
 		const renderer& clear(color c = colors::WHITE) const {
@@ -36,7 +34,7 @@ namespace render {
 		}
 		const renderer& render_line(int x1, int y1, int x2, int y2) const {
 			if (SDL_RenderDrawLine(_renderer, x1, y1, x2, y2) != 0)
-				throw -1;
+				throw - 1;
 			return *this;
 		}
 		template<class T>
@@ -53,25 +51,10 @@ namespace render {
 			_delta = now;
 			return delta;
 		}
-		bool poll_quit() const {
-			SDL_Event event;
-			while (SDL_PollEvent(&event)) {
-				if (event.type == SDL_QUIT) {
-					 return true;
-				}
-			}
-			return false;
-		}
-		bool done() const {
-			return _done;
-		}
 		renderer& display(std::function<void(const renderer&, int)> display_function) {
-			while (!_done) {
-				clear();
-				display_function(*this, delta());
-				present();
-				_done = poll_quit();
-			}
+			clear();
+			display_function(*this, delta());
+			present();
 			return *this;
 		}
 

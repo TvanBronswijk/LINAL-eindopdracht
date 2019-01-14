@@ -4,7 +4,7 @@
 namespace math {
 	template<class T>
 	struct uvector3D : public uvector<T, 4> {
-		uvector3D() : uvector{ T(0), T(0), T(0) } {};
+		uvector3D() : uvector{ { T(0), T(0), T(0), T(0) } } {};
 		uvector3D(T x, T y, T z) : uvector{ { x, y, z, T(0) } } {};
 		uvector3D(T x, T y, T z, T w) : uvector{ { x, y, z, w } } {};
 		T& x() { return _values[0]; }

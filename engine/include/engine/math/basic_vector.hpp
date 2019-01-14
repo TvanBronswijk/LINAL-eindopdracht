@@ -6,7 +6,7 @@ namespace math {
 	template<class T, size_t Rows>
 	struct uvector {
 	public:
-		uvector() : _values(T[Rows]) {};
+		uvector() = default;
 		uvector(std::array<T, Rows> values) : _values(values) {};
 		~uvector() = default;
 		T& operator[](size_t index){ return _values[index]; }

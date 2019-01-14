@@ -89,10 +89,10 @@ namespace math {
 	}
 
 	template<class T, size_t Rows> uvector<T, Rows> operator * (const umatrix<T, Rows>& l, const uvector<T, Rows>& r) {
-		uvector<T, Rows> result(r);
+		uvector<T, Rows> result{};
 		for (int ri = 0; ri < l.rows(); ri++)
 			for (int ci = 0; ci < l.rows(); ci++)
-				result[ri] += (l(ri, ci) * result[ci]);
+				result[ri] += (l(ri, ci) * r[ci]);
 		return result;
 	}
 }

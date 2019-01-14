@@ -7,6 +7,8 @@ namespace math {
 		uvector3D() : uvector{ { T(0), T(0), T(0), T(0) } } {};
 		uvector3D(T x, T y, T z) : uvector{ { x, y, z, T(0) } } {};
 		uvector3D(T x, T y, T z, T w) : uvector{ { x, y, z, w } } {};
+		uvector3D(const uvector<T, 4>& v) : uvector(v) {};
+		uvector3D& operator=(const uvector<T, 4>& v) { for (int i = 0; i < 4; i++) _values[i] = v[i]; return *this; }
 		T& x() { return _values[0]; }
 		const T& x() const { return _values[0]; }
 		T& y() { return _values[1]; }

@@ -40,7 +40,7 @@ void demo() {
 				model = rotate(model, rotation);
 			});
 
-			vec = *static_cast<vector3D*>(&(model * vector3D{ 1.0f, 1.0f, 1.0f, 1.0f }));
+			vec = (model * vector3D{ 1.0f, 1.0f, 1.0f, 1.0f });
 		}
 	}
 	catch (int e) {

@@ -12,26 +12,26 @@ static const int WIDTH = 1280;
 static const int HEIGHT = 640;
 
 void demo() {
-	vector3D rotation = { 0.1f, 0.2f, 0.1f };
-	matrix3D model = matrix3D::multidimensional_constructor<10>{{
+	uvector<float, 3> rotation = { { 0.1f, 0.2f, 0.1f } };
+	matrix3D model = matrix3D::multidimensional_constructor<10>{ {
 		{0.0f, 0.0f, 2.0f, 1.0f, 0.0f, 1.0f, 2.0f, 0.0f, 2.0f, 1.0f},
 		{2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 1.0f},
 		{0.0f, 2.0f, 0.0f, 1.0f, 2.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f},
 		{1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f}
-	}};
-	
-	model = translate(model, {-1.0f, -1.0f, -1.0f});
-	model = scale(model, {3.0f, 3.0f, 3.0f});
+	} };
+
+	model = translate(model, { {-1.0f, -1.0f, -1.0f} });
+	model = scale(model, { { 3.0f, 3.0f, 3.0f } });
 
 	inputhandler input{};
-	renderer view{WIDTH, HEIGHT};
-	graph graph{view, rectangle{0, 0, WIDTH, HEIGHT}};
+	renderer view{ WIDTH, HEIGHT };
+	graph graph{ view, rectangle{0, 0, WIDTH, HEIGHT} };
 	try {
 		while (true) {
-			if (input.on_event([&](std::string key) { 
-				return false; 
+			if (input.on_event([&](std::string key) {
+				return false;
 			})) break;
-			
+
 			view.display([&](int dt) {
 				graph.draw();
 				graph.draw_matrix(model, colors::BLUE);

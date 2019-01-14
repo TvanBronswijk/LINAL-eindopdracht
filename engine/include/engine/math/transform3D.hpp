@@ -4,39 +4,39 @@
 #include "matrix3D.hpp"
 
 namespace math {
-	template<class T> umatrix3D<T> scale(uvector3D<T> sv) {
+	template<class T> umatrix3D<T> scale(uvector<T, 3> sv) {
 		return umatrix3D<T>::multidimensional_constructor<4>{ {
-			{ sv.x(), 0, 0, 0},
-			{ 0,    sv.y(), 0,    0 },
-			{ 0,    0,    sv.z(), 0 },
+			{ sv[0], 0, 0, 0},
+			{ 0,    sv[1], 0,    0 },
+			{ 0,    0,    sv[2], 0 },
 			{ 0,    0,    0,    1 }
 			}};
 	}
 
-	template<class T> umatrix3D<T> scale(const umatrix3D<T>& m, uvector3D<T> sv) {
+	template<class T> umatrix3D<T> scale(const umatrix3D<T>& m, uvector<T, 3> sv) {
 		umatrix3D<T> sm = scale(sv);
 		sm = sm * m;
 		return sm;
 	}
 
-	template<class T> umatrix3D<T> translate(uvector3D<T> tv) {
+	template<class T> umatrix3D<T> translate(uvector<T, 3> tv) {
 		return umatrix3D<T>::multidimensional_constructor<4>{ {
-			{ 1, 0, 0, tv.x() },
-			{ 0, 1, 0, tv.y() },
-			{ 0, 0, 1, tv.z() },
+			{ 1, 0, 0, tv[0] },
+			{ 0, 1, 0, tv[1] },
+			{ 0, 0, 1, tv[2] },
 			{ 0, 0, 0, 1 }
 			}};
 	}
-	template<class T> umatrix3D<T> translate(const umatrix3D<T>& m, uvector3D<T> tv) {
+	template<class T> umatrix3D<T> translate(const umatrix3D<T>& m, uvector<T, 3> tv) {
 		umatrix3D<T> tm = translate(tv);
 		tm = tm * m;
 		return tm;
 	}
 
-	template<class T> umatrix3D<T> rotate(uvector3D<T> dv) {
-		uradian<T> xrad = deg_to_rad(dv.x());
-		uradian<T> yrad = deg_to_rad(dv.y());
-		uradian<T> zrad = deg_to_rad(dv.z());
+	template<class T> umatrix3D<T> rotate(uvector<T, 3> dv) {
+		uradian<T> xrad = deg_to_rad(dv[0]);
+		uradian<T> yrad = deg_to_rad(dv[1]);
+		uradian<T> zrad = deg_to_rad(dv[2]);
 
 		umatrix3D<T> xrot = umatrix3D<T>::multidimensional_constructor<4>{ {
 			{ 1, 0, 0, 0 },
@@ -62,7 +62,7 @@ namespace math {
 		return zrot * yrot * xrot;
 	}
 
-	template<class T> umatrix3D<T> rotate(const umatrix3D<T>& m, uvector3D<T> dv) {
+	template<class T> umatrix3D<T> rotate(const umatrix3D<T>& m, uvector<T, 3> dv) {
 		umatrix3D<T> rm = rotate(dv);
 		rm = rm * m;
 		return rm;

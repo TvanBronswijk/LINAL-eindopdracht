@@ -4,28 +4,28 @@
 #include "matrix2D.hpp"
 
 namespace math {
-	template<class T> umatrix2D<T> scale(uvector2D<T> sv) {
+	template<class T> umatrix2D<T> scale(uvector<T, 2> sv) {
 		return umatrix2D<T>::multidimensional_constructor<3>{{
-			{ sv.x(), 0,    0 },
-			{ 0,    sv.y(), 0 },
+			{ sv[0], 0,    0 },
+			{ 0,    sv[1], 0 },
 			{ 0,    0,    1 }
 		}};
 	}
 
-	template<class T> umatrix2D<T> scale(const umatrix2D<T>& m, uvector2D<T> sv) {
+	template<class T> umatrix2D<T> scale(const umatrix2D<T>& m, uvector<T, 2> sv) {
 		umatrix2D<T> sm = scale(sv);
 		sm = sm * m;
 		return sm;
 	}
 
-	template<class T> umatrix2D<T> translate(uvector2D<T> tv) {
+	template<class T> umatrix2D<T> translate(uvector<T, 2> tv) {
 		return umatrix2D<T>::multidimensional_constructor<3>{{
-			{ 1, 0, tv.x() },
-			{ 0, 1, tv.y() },
+			{ 1, 0, tv[0] },
+			{ 0, 1, tv[0] },
 			{ 0, 0, 1    }
 		}};
 	}
-	template<class T> umatrix2D<T> translate(const umatrix2D<T>& m, uvector2D<T> tv) {
+	template<class T> umatrix2D<T> translate(const umatrix2D<T>& m, uvector<T, 2> tv) {
 		umatrix2D<T> tm = translate(tv);
 		tm = tm * m;
 		return tm;

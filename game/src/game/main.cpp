@@ -26,6 +26,7 @@ void demo() {
 	inputhandler input{};
 	rendering3d::view<float> view_angle = rendering3d::view<float>::xy;
 	std::vector<bullet> bullets{};
+	bool help = false;
 	try {
 		while (true) {
 			if (input.on_event([&](std::string key) {
@@ -37,11 +38,15 @@ void demo() {
 				else if (key == "E") ship.roll(1.0f);
 				else if (key == "Left Shift") ship.move(1.0f);
 				else if (key == "Left Ctrl") ship.move(-1.0f);
-				else if (key == "Space") bullets.emplace_back(
-					bullet{ factory.create_bullet({{ship.get_model().center().x(), ship.get_model().center().y(), ship.get_model().center().z()}}) });
 				else if (key == "1") view_angle = rendering3d::view<float>::xy;
 				else if (key == "2") view_angle = rendering3d::view<float>::zy;
 				else if (key == "3") view_angle = rendering3d::view<float>::xz;
+				else if (key == "H") help = !help;
+				else if (key == "Space") {
+					bullet shot{ factory.create_bullet({{ship.get_model().center().x(), ship.get_model().center().y(), ship.get_model().center().z()}}) };
+					shot.get_model().heading = ship.get_model().heading;
+					bullets.push_back(shot);
+				}
 				else if (key == "Escape") return true;
 				return false;
 			})) break;
@@ -56,7 +61,7 @@ void demo() {
 					b.update();
 				});
 				view.set_color(colors::BLUE);
-				ship.get_model().render_angles(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
+				if(help) ship.get_model().render_angles(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
 				diamond.pulse(dt);
 			});
 

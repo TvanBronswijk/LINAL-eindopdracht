@@ -51,7 +51,11 @@ namespace rendering::rendering3d {
 		return {x, y, z, 1.0f};
 	}
 	void model::render(view<float> view, float x, float y) {
+		auto cntr = center();
+		translate({ {-cntr.x(), -cntr.y(), -cntr.z()} });
 		matrix3D renderable = math::scale(_mesh.vertices, _scale);
+		translate({ {cntr.x(), cntr.y(), cntr.z()} });
+		renderable = math::translate(renderable, { {cntr.x(), cntr.y(), cntr.z()} });
 
 		std::for_each(_mesh.edges.begin(), _mesh.edges.end(), [&](std::pair<size_t, size_t> pair) {
 			_renderer->render_line(
@@ -64,8 +68,7 @@ namespace rendering::rendering3d {
 
 	void model::render_angles(view<float> view, float x, float y) {
 		auto h = center();
-		auto sec = h + heading;
-		sec *= 2.0f;
+		auto sec = h + heading * 100.0f;
 		_renderer->render_line(x + h[view.first], y + -h[view.second], x + sec[view.first], y + -sec[view.second]);
 	}
 }

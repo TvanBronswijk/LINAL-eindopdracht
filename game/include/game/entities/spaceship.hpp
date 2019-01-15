@@ -3,12 +3,21 @@
 
 class spaceship {
 public:
-	spaceship(rendering::rendering3d::model model) : _model(model) {}
+	float speed{ 0.0f };
+	spaceship(rendering::rendering3d::model model) : _model(model), max_speed(1.0f) {}
+	spaceship(rendering::rendering3d::model model, float max_speed) : _model(model), max_speed(max_speed) {}
 	void pitch(float f) { rotate(f, 0.0f, 0.0f); }
 	void yaw(float f) { rotate(0.0f, f, 0.0f); }
 	void roll(float f) { rotate(0.0f, 0.0f, f); }
 	void move(float f) { 
-		translate(_model.heading.x() * f, _model.heading.y() * f, _model.heading.z() * f);
+		if (speed < max_speed)
+			speed += f;
+	}
+	void update() {
+		if (speed > 0.0f) {
+			translate(_model.heading.x() * speed, _model.heading.y() * speed, _model.heading.z() * speed);
+			speed -= max_speed / 256.0f;
+		}
 	}
 	rendering::rendering3d::model& get_model() { return _model; }
 private:
@@ -18,5 +27,6 @@ private:
 	void rotate(float x, float y, float z) {
 		_model.rotate({ {x, y, z} }, _model.center());
 	}
+	float max_speed;
 	rendering::rendering3d::model _model;
 };

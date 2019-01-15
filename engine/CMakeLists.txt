@@ -14,7 +14,7 @@ add_library (engine STATIC
 	"src/engine/input/inputhandler.cpp"
 	"src/engine/rendering/renderer.cpp"
 	"src/engine/rendering/graphing/graph.cpp"
-	"src/engine/rendering/3D/mesh.cpp"
+	"src/engine/rendering/3D/model.cpp"
 )
 
 target_compile_features(engine PUBLIC cxx_std_17)

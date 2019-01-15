@@ -13,10 +13,11 @@ static const int WIDTH = 1280;
 static const int HEIGHT = 640;
 
 void demo() {
-	mesh model{
-		matrix3D::multidimensional_constructor<4>{{
+	renderer view{ WIDTH, HEIGHT };
+	model ship{ {
+		matrix3D::multidimensional_constructor<4>{ {
 			{0.0f, 50.0f, 25.0f, 25.0f},
-			{0.0f, 0.0f, 50.0f, 25.0f},
+			{0.0f, 0.0f, 50.0f, 10.0f},
 			{0.0f, 0.0f, 0.0f, 10.f},
 			{1.0f, 1.0f, 1.0f, 1.0f}
 		}},
@@ -28,20 +29,30 @@ void demo() {
 			{1, 3},
 			{2, 3}
 		}
+	}, 
+	view
 	};
 
 	inputhandler input{};
-	renderer view{ WIDTH, HEIGHT };
-	graphing::graph graph{ view, rectangle{0, 0, WIDTH, HEIGHT} };
 	try {
 		while (true) {
 			if (input.on_event([&](std::string key) {
+				if (key == "Up") {
+				}
+				if (key == "Down") {
+				}
+				if (key == "Right") {
+				}
+				if (key == "Left") {
+				}
+				if (key == "Space") {
+				}
 				return false;
 			})) break;
 
 			view.display([&](int dt) {
 				view.set_color(colors::RED);
-				model.render(view);
+				ship.render(WIDTH / 2.0f, HEIGHT / 2.0f);
 			});
 		}
 	}

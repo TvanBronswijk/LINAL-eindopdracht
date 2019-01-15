@@ -22,9 +22,9 @@ namespace math {
 	};
 	template<class T, size_t Rows> uvector<T, Rows> operator + (const uvector<T, Rows>& l, const uvector<T, Rows>& r) { uvector<T, Rows> result(l); result += r; return result; };
 	template<class T, size_t Rows> uvector<T, Rows> operator - (const uvector<T, Rows>& l, const uvector<T, Rows>& r) { uvector<T, Rows> result(l); result -= r; return result; };
-	template<class T, size_t Rows> uvector<T, Rows> operator * (uscalar<T> l, const uvector<T, Rows>& r) { return uvector<T, Rows> result(r); result *= l; return result; };
-	template<class T, size_t Rows> uvector<T, Rows> operator * (const uvector<T, Rows>& l, uscalar<T> r) { return uvector<T, Rows> result(l); result *= r; return result; };
-	template<class T, size_t Rows> uvector<T, Rows> operator / (const uvector<T, Rows>& l, uscalar<T> r) { return uvector<T, Rows> result(l); result /= r; return result; };
+	template<class T, size_t Rows> uvector<T, Rows> operator * (uscalar<T> l, const uvector<T, Rows>& r) { uvector<T, Rows> result(r); result *= l; return result; };
+	template<class T, size_t Rows> uvector<T, Rows> operator * (const uvector<T, Rows>& l, uscalar<T> r) { uvector<T, Rows> result(l); result *= r; return result; };
+	template<class T, size_t Rows> uvector<T, Rows> operator / (const uvector<T, Rows>& l, uscalar<T> r) { uvector<T, Rows> result(l); result /= r; return result; };
 	template<class T, size_t Rows> bool operator==(const uvector<T, Rows>& l, const uvector<T, Rows>& r) { for (int i = 0; i < Rows; i++) if (l[i] != r[i]) return false; return true; }
 	template<class T, size_t Rows> bool operator!=(const uvector<T, Rows>& l, const uvector<T, Rows>& r) { return !(l == r); }
 }

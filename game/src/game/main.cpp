@@ -56,7 +56,7 @@ void demo() {
 					b.update();
 				});
 				view.set_color(colors::BLUE);
-				//ship.get_model().render_angles(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
+				ship.get_model().render_angles(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
 				diamond.pulse(dt);
 			});
 

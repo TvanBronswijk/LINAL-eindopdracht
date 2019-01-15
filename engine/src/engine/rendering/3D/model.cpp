@@ -64,6 +64,8 @@ namespace rendering::rendering3d {
 
 	void model::render_angles(view<float> view, float x, float y) {
 		auto h = center();
-		_renderer->render_line(x + h[view.first], y + -h[view.second], x + heading[view.first], x + heading[view.second]);
+		auto sec = h + heading;
+		sec *= 2.0f;
+		_renderer->render_line(x + h[view.first], y + -h[view.second], x + sec[view.first], y + -sec[view.second]);
 	}
 }

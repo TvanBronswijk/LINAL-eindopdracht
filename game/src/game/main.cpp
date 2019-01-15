@@ -16,7 +16,7 @@ static const int HEIGHT = 640;
 void demo() {
 	renderer view{ WIDTH, HEIGHT };
 	entityfactory factory(view);
-	model ship = factory.create_spaceship();
+	model ship = factory.create_target();
 
 	inputhandler input{};
 	try {
@@ -39,6 +39,7 @@ void demo() {
 				view.set_color(colors::RED);
 				ship.render(WIDTH / 2.0f, HEIGHT / 2.0f);
 			});
+			ship.rotate({ {0.1, 0.1, 0.1} });
 		}
 	}
 	catch (int e) {

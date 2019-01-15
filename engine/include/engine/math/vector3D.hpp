@@ -21,5 +21,5 @@ namespace math {
 
 	template<class T> uscalar<T> dot(const uvector3D<T>& l, const uvector3D<T>& r) { return l.x()*r.x() + l.y()*r.y() + l.z()*r.z(); }
 	template<class T> uvector3D<T> cross(const uvector3D<T>& l, const uvector3D<T>& r) { return {l.y()*r.z() - l.z()*r.y(), l.z()*r.x() - l.x()*r.z(), l.x()*r.y() - l.y()*r.x()}; }
-	template<class T> uvector3D<T> normalize(const uvector3D<T>& l, const uvector3D<T>& r) { uscalar<T> l = std::sqrt(dot(l, r)); return {}; } //TODO
+	template<class T> uvector3D<T> normalize(const uvector3D<T>& l) { uscalar<T> le = std::sqrt(dot(l, l)); return {l.x() / le, l.y() / le, l.z() / le}; }
 }

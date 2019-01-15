@@ -14,9 +14,11 @@ namespace rendering::rendering3d {
 		model& rotate(math::uvector<float, 3>, math::uvector3D<float>);
 		math::uvector3D<float> center();
 		void render(view<float> view, float x = 0.0f, float y = 0.0f);
+		void render_angles(view<float> view, float x = 0.0f, float y = 0.0f);
 		mesh& get_mesh() { return _mesh; };
 	private:
 		renderer* _renderer;
 		mesh _mesh;
+		math::uvector<float, 3> _scale{ { 1.0f, 1.0f, 1.0f } };
 	};
 }

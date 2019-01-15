@@ -8,7 +8,10 @@ public:
 	void pitch(float f) { rotate(f, 0.0f, 0.0f); }
 	void yaw(float f) { rotate(0.0f, f, 0.0f); }
 	void roll(float f) { rotate(0.0f, 0.0f, f); }
-	void move(float f) { translate(0.0f, 0.0f, 0.0f); }
+	void move(float f) { 
+		math::uvector3D<float> heading = _model.center() * f;
+		translate(heading.x(), heading.y(), heading.z()); 
+	}
 	rendering::rendering3d::model& get_model() { return _model; }
 private:
 	void translate(float x, float y, float z) {

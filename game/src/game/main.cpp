@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <windows.h>
+#include <stdlib.h>
+#include <time.h>
 #include <engine/input/inputhandler.hpp>
 #include <engine/math.hpp>
 #include <engine/render.hpp>
@@ -8,6 +10,7 @@
 #include "game/entities/spaceship.hpp"
 #include "game/entities/target.hpp"
 #include "game/entities/bullet.hpp"
+#include "game/entities/astroid.hpp"
 
 using namespace input;
 using namespace rendering;
@@ -18,6 +21,9 @@ static const int WIDTH = 1280;
 static const int HEIGHT = 640;
 
 void demo() {
+	/* initialize random seed: */
+	srand(time(NULL));
+
 	renderer view{ WIDTH, HEIGHT };
 	entityfactory factory{ view };
 	spaceship ship{ factory.create_spaceship() };
@@ -27,6 +33,14 @@ void demo() {
 	inputhandler input{};
 	rendering3d::view<float> view_angle = rendering3d::view<float>::xy;
 	std::vector<bullet> bullets{};
+	std::vector<asteroid> asteroids{};
+
+	for (int i = 0; i < 10; i++) {
+		asteroid _asteroid{ factory.create_asteroid() };
+		_asteroid.get_model().translate({ {static_cast<float>(rand() % WIDTH + -WIDTH/2), static_cast<float>(rand() % WIDTH + -WIDTH / 2), static_cast<float>(rand() % WIDTH + -WIDTH / 2)} });
+		asteroids.emplace_back(_asteroid);
+	}
+
 	bool help = false;
 	try {
 		while (true) {
@@ -61,6 +75,12 @@ void demo() {
 					b.get_model().render(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
 					b.update();
 				});
+				view.set_color(colors::WHITE);
+				std::for_each(asteroids.begin(), asteroids.end(), [&](auto& a) {
+					a.get_model().render(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
+					a.update();
+				});
+
 				view.set_color(colors::BLUE);
 				if(help) ship.get_model().render_angles(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
 				diamond.pulse(dt);

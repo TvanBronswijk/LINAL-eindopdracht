@@ -9,32 +9,32 @@ math::umatrix3D<float> collisionbox::calculate_boundingbox(rendering::rendering3
 	float smallest_y = center.y();
 	float biggest_z = center.z();
 	float smallest_z = center.z();
-	int collum = 0;
 
-	model.get_mesh().vertices.foreach([&](auto& val) {
-		if (collum == 5) collum = 0;
-		switch (collum) {
-		case 1:
-			if (val > biggest_x) biggest_x = val;
-			if (val < smallest_x) smallest_x = val;
-			break;
-		case 2:
-			if (val > biggest_y) biggest_y = val;
-			if (val < smallest_y) smallest_y = val;
-			break;
-		case 3:
-			if (val > biggest_x) biggest_z = val;
-			if (val < smallest_x) smallest_z = val;
-			break;
-		case 4:
-			break;
+	for (int i = 0; i < model.get_mesh().vertices.columns(); i++) {
+		for (int j = 0; j < model.get_mesh().vertices.rows(); j++) {
+			auto val = model.get_mesh().vertices.at(j, i);
+			switch (j) {
+			case 0:
+				if (val > biggest_x) biggest_x = val;
+				if (val < smallest_x) smallest_x = val;
+				break;
+			case 1:
+				if (val > biggest_y) biggest_y = val;
+				if (val < smallest_y) smallest_y = val;
+				break;
+			case 2:
+				if (val > biggest_z) biggest_z = val;
+				if (val < smallest_z) smallest_z = val;
+				break;
+			case 3:
+				break;
+			}
 		}
-		collum++;
-	});
+	}
 
 	return math::umatrix3D<float>::multidimensional_constructor<2>{ {
 		{ smallest_x,biggest_x},
-		{ biggest_y,smallest_y},
+		{ smallest_y,biggest_y},
 		{ smallest_z,biggest_z},
 		{ 1.0f, 1.0f}
 		} };
@@ -47,9 +47,9 @@ bool collisionbox::calculate_collision(rendering::rendering3d::model& target_mod
 	auto target_boundingbox = calculate_boundingbox(target_model);
 	
 	for (int i = 0; i < 2; i++) {
-		if (source_boundingbox.at(0, 0) < target_boundingbox.at(0, i) && source_boundingbox.at(0, 1) > target_boundingbox.at(0, i)) {
-			if (source_boundingbox.at(1, 0) < target_boundingbox.at(1, i) && source_boundingbox.at(1, 1) > target_boundingbox.at(1, i)) {
-				if (source_boundingbox.at(2, 0) < target_boundingbox.at(2, i) && source_boundingbox.at(2, 1) > target_boundingbox.at(2, i)) {
+		if (source_boundingbox.at(0, 0) <= target_boundingbox.at(0, i) && source_boundingbox.at(0, 1) >= target_boundingbox.at(0, i)) {
+			if (source_boundingbox.at(1, 0) <= target_boundingbox.at(1, i) && source_boundingbox.at(1, 1) >= target_boundingbox.at(1, i)) {
+				if (source_boundingbox.at(2, 0) <= target_boundingbox.at(2, i) && source_boundingbox.at(2, 1) >= target_boundingbox.at(2, i)) {
 					collide = true;
 				}
 			}

@@ -4,7 +4,7 @@
 
 class spaceship {
 public:
-	spaceship(rendering::rendering3d::model model) : _model(model), _collisionbox(collisionbox(model)) {}
+	spaceship(rendering::rendering3d::model model) : _model(model), _collisionbox(_model) {}
 	void pitch(float f) { rotate(f, 0.0f, 0.0f); }
 	void yaw(float f) { rotate(0.0f, f, 0.0f); }
 	void roll(float f) { rotate(0.0f, 0.0f, f); }

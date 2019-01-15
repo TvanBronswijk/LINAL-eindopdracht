@@ -12,12 +12,14 @@ namespace rendering::rendering3d {
 		return *this;
 	}
 	model& model::rotate(uvector<float, 3> vec) {
-		_mesh.vertices = math::rotate(_mesh.vertices, vec);
+		auto rot = math::rotate(vec);
+		_mesh.vertices = rot * _mesh.vertices;
+		heading = rot * heading;
 		return *this;
 	}
 	model& model::rotate(math::uvector<float, 3> vec, math::uvector3D<float> point) {
 		translate({ {-point.x(), -point.y(), -point.z()} });
-		_mesh.vertices = math::rotate(_mesh.vertices, vec);
+		rotate(vec);
 		translate({ {point.x(), point.y(), point.z()} });
 		return *this;
 	}
@@ -62,6 +64,8 @@ namespace rendering::rendering3d {
 
 	void model::render_angles(view<float> view, float x, float y) {
 		auto h = center();
-		_renderer->render_line(x, y, x + h[view.first], y + -h[view.second]);
+		auto sec = h + heading;
+		sec *= 2.0f;
+		_renderer->render_line(x + h[view.first], y + -h[view.second], x + sec[view.first], y + -sec[view.second]);
 	}
 }

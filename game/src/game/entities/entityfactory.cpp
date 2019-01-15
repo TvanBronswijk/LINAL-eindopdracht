@@ -6,7 +6,7 @@ model entityfactory::create_spaceship() {
 	matrix3D::multidimensional_constructor<6>{ {
 		{-25.0f, 25.0f, 0.0f, 0.0f, -75.0f, 75.0f},
 		{0.0f, 0.0f, 25.0f, 0.0f, 5.0f, 5.0f},
-		{0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 0.0f},
+		{0.0f, 0.0f, 0.0f, 100.0f, 0.0f, 0.0f},
 		{1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f}
 	}},
 	{

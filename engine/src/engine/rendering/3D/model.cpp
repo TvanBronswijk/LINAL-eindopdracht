@@ -18,11 +18,35 @@ namespace rendering::rendering3d {
 	model& model::rotate(math::uvector<float, 3> vec, math::uvector3D<float> point) {
 		translate({ {-point.x(), -point.y(), -point.z()} });
 		_mesh.vertices = math::rotate(_mesh.vertices, vec);
-		translate({ {-point.x(), -point.y(), -point.z()} });
+		translate({ {point.x(), point.y(), point.z()} });
 		return *this;
 	}
 	uvector3D<float> model::center() {
-		return origin;
+		
+		float minx = 999999.0f, maxx = 0.0f;
+		float miny = 999999.0f, maxy = 0.0f;
+		float minz = 999999.0f, maxz = 0.0f;
+		for (int i = 0; i < _mesh.vertices.columns(); i++) {
+			if (_mesh.vertices(0, i) > maxx)
+				maxx = _mesh.vertices(0, i);
+			if (_mesh.vertices(0, i) < minx)
+				minx = _mesh.vertices(0, i);
+
+			if (_mesh.vertices(1, i) > maxy)
+				maxy = _mesh.vertices(1, i);
+			if (_mesh.vertices(1, i) < miny)
+				miny = _mesh.vertices(1, i);
+
+			if (_mesh.vertices(2, i) > maxz)
+				maxz = _mesh.vertices(2, i);
+			if (_mesh.vertices(2, i) < minz)
+				minz = _mesh.vertices(2, i);
+		}
+
+		float x = (minx + maxx) / 2;
+		float y = (miny + maxy) / 2;
+		float z = (minz + maxz) / 2;
+		return {x, y, z, 1.0f};
 	}
 	void model::render(view<float> view, float x, float y) {
 		matrix3D renderable = math::scale(_mesh.vertices, _scale);
@@ -37,8 +61,7 @@ namespace rendering::rendering3d {
 	}
 
 	void model::render_angles(view<float> view, float x, float y) {
-		_renderer->render_line(x, y, x, y);
-		_renderer->render_line(x, y, x, y);
-		_renderer->render_line(x, y, x, y);
+		auto h = center();
+		_renderer->render_line(x, y, x + h[view.first], y + -h[view.second]);
 	}
 }

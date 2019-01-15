@@ -15,11 +15,6 @@ namespace rendering::rendering3d {
 		math::uvector3D<float> center();
 		void render(view<float> view, float x = 0.0f, float y = 0.0f);
 		void render_angles(view<float> view, float x = 0.0f, float y = 0.0f);
-
-		math::uvector3D<float> origin{ 0.0f, 0.0f, 0.0f, 1.0f };
-		math::uvector3D<float> heading{0.0f, 0.0f, 1.0f, 1.0f};
-		math::uvector3D<float> up{0.0f, 1.0f, 0.0f, 1.0f};
-		math::uvector3D<float> side{1.0f, 0.0f, 0.0f, 1.0f};
 	private:
 		renderer* _renderer;
 		mesh _mesh;

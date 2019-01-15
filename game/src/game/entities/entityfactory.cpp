@@ -73,17 +73,18 @@ matrix3D::multidimensional_constructor<17>{ {
 } };
 	return { msh, *_renderer };
 }
-model entityfactory::create_bullet() {
+model entityfactory::create_bullet(math::uvector<float, 3> vec) {
 	mesh msh{
-matrix3D::multidimensional_constructor<2>{ {
-	{0.0f, 10.0f},
-	{0.0f, 0.0f},
-	{0.0f, 0.0f},
-	{1.0f, 1.0f}
+matrix3D::multidimensional_constructor<4>{ {
+	{-1.0f, 1.0f, 0.0f, 0.0f},
+	{-1.0f, 1.0f, 0.0f, 0.0f},
+	{0.0f, 25.0f, 0.0f, 0.0f},
+	{1.0f, 1.0f, 1.0f, 1.0f}
 }},
 {
 	{0, 1},
 } };
+	msh.vertices = math::translate(msh.vertices, vec);
 	return { msh, *_renderer };
 }
 model entityfactory::create_asteroid() {

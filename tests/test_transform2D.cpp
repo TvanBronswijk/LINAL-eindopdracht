@@ -2,7 +2,7 @@
 #include <engine/math/matrix2D.hpp>
 
 int scale_vector() {
-	math::umatrix2D<float> matrix_1 = math::scale(math::uvector2D<float>(2.0f, 2.0f));
+	math::umatrix2D<float> matrix_1 = math::scale(math::uvector<float, 2>({ 2.0f, 2.0f }));
 
 	if (matrix_1.at(0, 0) != 2.0f || matrix_1.at(1, 1) != 2.0f || matrix_1.at(2, 2) != 1.0f) {
 		return 1;
@@ -13,20 +13,19 @@ int scale_vector() {
 int scale_matrix_vector() {
 	math::umatrix2D<float> matrix_1 = math::umatrix2D<float>::multidimensional_constructor<3>{ {
 	{ 1.0f, 1.0f, 1.0f },
-	{ 1.0f, 1.0f, 1.0f },
 	{ 1.0f, 1.0f, 1.0f }
 	} };
 
-	math::umatrix2D<float> matrix_2 = math::scale(matrix_1,math::uvector2D<float>(2.0f, 2.0f));
+	math::umatrix2D<float> matrix_2 = math::scale(matrix_1, math::uvector<float, 2>({ 2.0f, 2.0f }));
 
-	if (matrix_2.at(0, 0) != 2.0f || matrix_2.at(1, 1) != 2.0f || matrix_2.at(2, 2) != 1.0f) {
+	if (matrix_2.at(0, 0) != 2.0f || matrix_2.at(1, 1) != 2.0f || matrix_2.at(2, 2) != 0.0f) {
 		return 1;
 	}
 	else { return 0; }
 }
 
 int translate_vector() {
-	math::umatrix2D<float> matrix_1 = math::translate(math::uvector2D<float>(2.0f, 2.0f));
+	math::umatrix2D<float> matrix_1 = math::translate(math::uvector<float, 2>({ 2.0f, 2.0f }));
 
 	if (matrix_1.at(0,2) != 2.0f || matrix_1.at(1, 2) != 2.0f || matrix_1.at(2,2) != 1.0f) {
 		return 1;
@@ -41,7 +40,7 @@ int translate_matrix_vector() {
 	{ 1.0f, 1.0f, 1.0f }
 	} };
 
-	math::umatrix2D<float> matrix_2 = math::translate(matrix_1, math::uvector2D<float>(2.0f, 2.0f));
+	math::umatrix2D<float> matrix_2 = math::translate(matrix_1, math::uvector<float, 2>({ 2.0f, 2.0f }));
 
 	if (matrix_2.at(0, 2) != 3.0f || matrix_2.at(1, 2) != 3.0f || matrix_2.at(2, 2) != 1.0f) {
 		return 1;

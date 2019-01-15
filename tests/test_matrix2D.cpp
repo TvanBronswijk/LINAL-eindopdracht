@@ -1,4 +1,4 @@
-#include <engine/math/transform2D.hpp>
+//#include <engine/math/transform2D.hpp>
 #include <engine/math/matrix2D.hpp>
 
 int make() {
@@ -84,7 +84,7 @@ int scalar_times_matrix() {
 	}
 }
 
-int matrix_times_matrix() {//TODO::check
+int matrix_times_matrix() {
 	math::umatrix2D<float> matrix_1 = math::umatrix2D<float>::multidimensional_constructor<3>{ {
 		{ 1.0f, 1.0f, 1.0f },
 		{ 1.0f, 1.0f, 1.0f },

@@ -2,7 +2,7 @@
 #include <engine/math/matrix3D.hpp>
 
 int scale_vector() {
-	math::umatrix3D<float> matrix_1 = math::scale(math::uvector3D<float>(2.0f, 2.0f, 2.0f));
+	math::umatrix3D<float> matrix_1 = math::scale(math::uvector<float, 3>({ 2.0f, 2.0f, 2.0f }));
 
 	if (matrix_1.at(0, 0) != 2.0f || matrix_1.at(1, 1) != 2.0f || matrix_1.at(2, 2) != 2.0f) {
 		return 1;
@@ -18,7 +18,7 @@ int scale_matrix_vector() {
 	{ 1.0f, 1.0f, 1.0f }
 	} };
 
-	math::umatrix3D<float> matrix_2 = math::scale(matrix_1, math::uvector3D<float>(2.0f, 2.0f, 2.0f));
+	math::umatrix3D<float> matrix_2 = math::scale(matrix_1, math::uvector<float, 3>({ 2.0f, 2.0f, 2.0f }));
 
 	if (matrix_2.at(0, 0) != 2.0f || matrix_2.at(1, 1) != 2.0f || matrix_2.at(2, 2) != 2.0f) {
 		return 1;
@@ -27,7 +27,7 @@ int scale_matrix_vector() {
 }
 
 int translate_vector() {
-	math::umatrix3D<float> matrix_1 = math::translate(math::uvector3D<float>(2.0f, 2.0f, 2.0f));
+	math::umatrix3D<float> matrix_1 = math::translate(math::uvector<float, 3>({ 2.0f, 2.0f, 2.0f }));
 
 	if (matrix_1.at(0, 0) != 1.0f || matrix_1.at(0, 3) != 2.0f || matrix_1.at(1, 3) != 2.0f) {
 		return 1;
@@ -43,7 +43,7 @@ int translate_matrix_vector() {
 	{ 1.0f, 1.0f, 1.0f }
 	} };
 
-	math::umatrix3D<float> matrix_2 = math::translate(matrix_1, math::uvector3D<float>(2.0f, 2.0f, 2.0f));
+	math::umatrix3D<float> matrix_2 = math::translate(matrix_1, math::uvector<float, 3>({ 2.0f, 2.0f, 2.0f }));
 
 	if (matrix_2.at(0, 2) != 3.0f || matrix_2.at(1, 2) != 3.0f || matrix_2.at(2, 2) != 3.0f) {
 		return 1;
@@ -52,7 +52,7 @@ int translate_matrix_vector() {
 }
 
 int rotate_vector() {
-	math::umatrix3D<float> matrix_2 = math::rotate(math::uvector3D<float>(180.0f, 0.0f, 0.0f));
+	math::umatrix3D<float> matrix_2 = math::rotate(math::uvector<float, 3>({ 180.0f, 0.0f, 0.0f }));
 
 	if (matrix_2.at(0, 0) != 1.0f || matrix_2.at(1, 1) != -1.0f || matrix_2.at(3, 3) != 1.0f) {
 		return 1;
@@ -69,7 +69,7 @@ int rotate_matrix_vector() {
 	} };
 
 
-	math::umatrix3D<float> matrix_2 = math::rotate(matrix_1,math::uvector3D<float>(180.0f, 180.0f, 180.0f));
+	math::umatrix3D<float> matrix_2 = math::rotate(matrix_1, math::uvector<float, 3>({ 180.0f, 180.0f, 180.0f }));
 
 	if (matrix_2.at(0, 0) != 1.0f || matrix_2.at(1, 1) != 0.999999881f || matrix_2.at(2, 2) != 1.00000012f) {
 		return 1;

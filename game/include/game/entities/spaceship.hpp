@@ -10,7 +10,7 @@ public:
 	rendering::rendering3d::model& get_model() { return _model; }
 private:
 	void rotate(float x, float y, float z) {
-		_model.rotate({ {x, y, z} });
+		_model.rotate({ {x, y, z} }, _model.center());
 	}
 	rendering::rendering3d::model _model;
 };

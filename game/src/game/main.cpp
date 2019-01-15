@@ -20,6 +20,7 @@ void demo() {
 	spaceship ship{ factory.create_spaceship() };
 
 	inputhandler input{};
+	rendering3d::view<float> view_angle = rendering3d::view<float>::xy;
 	try {
 		while (true) {
 			if (input.on_event([&](std::string key) {
@@ -43,12 +44,21 @@ void demo() {
 				}
 				if (key == "Space") {
 				}
+				if (key == "1") {
+					view_angle = rendering3d::view<float>::xy;
+				}
+				if (key == "2") {
+					view_angle = rendering3d::view<float>::yz;
+				}
+				if (key == "3") {
+					view_angle = rendering3d::view<float>::xz;
+				}
 				return false;
 			})) break;
 
 			view.display([&](int dt) {
 				view.set_color(colors::RED);
-				ship.get_model().render(WIDTH / 2.0f, HEIGHT / 2.0f);
+				ship.get_model().render(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
 			});
 		}
 	}

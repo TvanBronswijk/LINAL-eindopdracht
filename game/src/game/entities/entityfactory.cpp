@@ -4,9 +4,9 @@ using namespace rendering::rendering3d;
 model entityfactory::create_spaceship() {
 	mesh msh{
 	matrix3D::multidimensional_constructor<4>{ {
-		{0.0f, 50.0f, 25.0f, 25.0f},
-		{0.0f, 0.0f, 50.0f, 10.0f},
-		{0.0f, 0.0f, 0.0f, 10.f},
+		{-25.0f, 25.0f, 0.0f, 0.0f},
+		{-25.0f, -25.0f, 25.0f, -15.0f},
+		{-25.0f, -25.0f, -25.0f, -15.f},
 		{1.0f, 1.0f, 1.0f, 1.0f}
 	}},
 	{

@@ -51,7 +51,6 @@ void demo() {
 				else if (key == "Q") ship.roll(-1.0f);
 				else if (key == "E") ship.roll(1.0f);
 				else if (key == "Left Shift") ship.move(0.1f);
-				else if (key == "Left Ctrl") ship.move(-1.0f);
 				else if (key == "1") view_angle = rendering3d::view<float>::xy;
 				else if (key == "2") view_angle = rendering3d::view<float>::zy;
 				else if (key == "3") view_angle = rendering3d::view<float>::xz;

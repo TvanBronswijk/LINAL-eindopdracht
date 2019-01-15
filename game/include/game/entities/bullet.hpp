@@ -5,7 +5,7 @@
 
 class bullet {
 public:
-	bullet(rendering::rendering3d::model model, float speed)) : _model(model),speed(speed), _collisionbox(_model) {}
+	bullet(rendering::rendering3d::model model, float speed) : _model(model),speed(speed), _collisionbox(_model) {}
 	void update() {
 		_model.translate({ {_model.heading.x() * speed, _model.heading.y() * speed, _model.heading.z() * speed} });
 	}

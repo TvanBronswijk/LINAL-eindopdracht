@@ -57,7 +57,9 @@ void demo() {
 				diamond.pulse(dt);
 			});
 
-
+			if (ship.get_collisionbox().calculate_collision(diamond.get_model())) {
+				std::cout << "werkt\n";
+			}
 		}
 	}
 	catch (int e) {

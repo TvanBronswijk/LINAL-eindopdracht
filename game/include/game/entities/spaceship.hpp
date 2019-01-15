@@ -13,6 +13,7 @@ public:
 		translate(heading.x(), heading.y(), heading.z()); 
 	}
 	rendering::rendering3d::model& get_model() { return _model; }
+	collisionbox& get_collisionbox() { return _collisionbox; }
 private:
 	void translate(float x, float y, float z) {
 		_model.translate({ {x, y, z} });

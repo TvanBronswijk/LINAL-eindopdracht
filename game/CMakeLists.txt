@@ -10,6 +10,7 @@ endif()
 add_executable (game
 	"src/game/main.cpp"
 	"src/game/entities/entityfactory.cpp"
+	"src/game/collision/collisionbox.cpp"
 )
 
 target_compile_features(game PUBLIC cxx_std_17)

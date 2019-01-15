@@ -1,9 +1,10 @@
 #pragma once
 #include <engine/rendering/3D/model.hpp>
+#include"game/collision/collisionbox.hpp"
 
 class spaceship {
 public:
-	spaceship(rendering::rendering3d::model model) : _model(model) {}
+	spaceship(rendering::rendering3d::model model) : _model(model), _collisionbox(collisionbox(model)) {}
 	void pitch(float f) { rotate(f, 0.0f, 0.0f); }
 	void yaw(float f) { rotate(0.0f, f, 0.0f); }
 	void roll(float f) { rotate(0.0f, 0.0f, f); }
@@ -17,4 +18,6 @@ private:
 		_model.rotate({ {x, y, z} }, _model.center());
 	}
 	rendering::rendering3d::model _model;
+	collisionbox _collisionbox;
+
 };

@@ -1,4 +1,5 @@
 #include "game/entities/entityfactory.hpp"
+#include <iostream>
 
 using namespace rendering::rendering3d;
 model entityfactory::create_spaceship() {

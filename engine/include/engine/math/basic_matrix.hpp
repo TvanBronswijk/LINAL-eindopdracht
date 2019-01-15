@@ -3,6 +3,7 @@
 #include <functional>
 #include <vector>
 #include <array>
+#include <ostream>
 #include "basic_vector.hpp"
 
 namespace math {
@@ -94,5 +95,15 @@ namespace math {
 			for (int ci = 0; ci < l.rows(); ci++)
 				result[ri] += (l(ri, ci) * r[ci]);
 		return result;
+	}
+
+	template<class T, size_t Rows> std::ostream& operator<<(std::ostream& o, const umatrix<T, Rows>& mat) {
+		for (int ri = 0; ri < mat.rows(); ri++) {
+			o << "{ ";
+			for (int ci = 0; ci < mat.columns(); ci++)
+				o << mat(ri, ci) << ' ';
+			o << "}\n";
+		}
+		return o;
 	}
 }

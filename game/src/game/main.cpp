@@ -47,7 +47,7 @@ void demo() {
 				view.set_color(colors::RED);
 				//ship.get_model().render(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
 				diamond.get_model().render(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
-				diamond.pulse(1000.0f / dt);
+				diamond.pulse(dt);
 			});
 		}
 	}

@@ -6,9 +6,7 @@ class bullet {
 public:
 	bullet(rendering::rendering3d::model model) : _model(model) {}
 	void update() {
-		math::uvector3D<float> heading = _model.center();
-		heading = normalize(heading);
-		_model.translate({ {heading.x(), heading.y(), heading.z()} });
+		_model.translate({ {_model.heading.x(), _model.heading.y(), _model.heading.z()} });
 	}
 	rendering::rendering3d::model& get_model() { return _model; }
 private:

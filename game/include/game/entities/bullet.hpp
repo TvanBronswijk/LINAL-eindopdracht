@@ -10,6 +10,7 @@ public:
 		_model.translate({ {_model.heading.x(), _model.heading.y(), _model.heading.z()} });
 	}
 	rendering::rendering3d::model& get_model() { return _model; }
+	collisionbox& get_collisionbox() { return _collisionbox; }
 private:
 	rendering::rendering3d::model _model;
 	collisionbox _collisionbox;

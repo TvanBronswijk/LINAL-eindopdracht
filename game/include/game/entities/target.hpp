@@ -30,6 +30,7 @@ public:
 		}
 	}
 	rendering::rendering3d::model& get_model() { return _model; }
+	collisionbox& get_collisionbox() { return _collisionbox; }
 private:
 	bool grow;
 	float timer;

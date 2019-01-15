@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <windows.h>
 #include <engine/input/inputhandler.hpp>
 #include <engine/math.hpp>
 #include <engine/render.hpp>
@@ -66,7 +67,14 @@ void demo() {
 			});
 
 			if (ship.get_collisionbox().calculate_collision(diamond.get_model())) {
-				std::cout << "werkt\n";
+				MessageBox(HWND_DESKTOP, "You dead off a error in the guiding system!", "You Lose", MB_OK);
+				return;
+			}
+			for (int i = 0; i < bullets.size(); i++) {
+				if (diamond.get_collisionbox().calculate_collision(bullets.at(i).get_model())) {
+					MessageBox(HWND_DESKTOP, "Winner Winner chicken Dinner", "You win", MB_OK);
+					return;
+				}
 			}
 		}
 	}

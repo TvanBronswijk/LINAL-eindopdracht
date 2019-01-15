@@ -1,3 +1,4 @@
+#pragma once
 #include <engine/math/matrix3D.hpp>
 #include <engine/rendering/3D/model.hpp>
 

@@ -52,9 +52,9 @@ void demo() {
 				ship.get_model().render(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
 				diamond.get_model().render(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
 				shot.get_model().render(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
-
 				view.set_color(colors::BLUE);
 				ship.get_model().render_angles(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
+				diamond.pulse(dt);
 			});
 
 

@@ -3,6 +3,7 @@
 #include <engine/input/inputhandler.hpp>
 #include <engine/math.hpp>
 #include <engine/render.hpp>
+#include "game/entities/entityfactory.hpp"
 
 using namespace input;
 using namespace rendering;
@@ -14,24 +15,8 @@ static const int HEIGHT = 640;
 
 void demo() {
 	renderer view{ WIDTH, HEIGHT };
-	model ship{ {
-		matrix3D::multidimensional_constructor<4>{ {
-			{0.0f, 50.0f, 25.0f, 25.0f},
-			{0.0f, 0.0f, 50.0f, 10.0f},
-			{0.0f, 0.0f, 0.0f, 10.f},
-			{1.0f, 1.0f, 1.0f, 1.0f}
-		}},
-		{
-			{0, 1},
-			{1, 2},
-			{2, 0},
-			{0, 3},
-			{1, 3},
-			{2, 3}
-		}
-	}, 
-	view
-	};
+	entityfactory factory(view);
+	model ship = factory.create_spaceship();
 
 	inputhandler input{};
 	try {

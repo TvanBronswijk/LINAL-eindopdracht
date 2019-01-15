@@ -9,6 +9,7 @@ endif()
 
 add_executable (game
 	"src/game/main.cpp"
+	"src/game/entities/entityfactory.cpp"
 )
 
 target_compile_features(game PUBLIC cxx_std_17)

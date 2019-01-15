@@ -2,6 +2,7 @@
 #include "engine/rendering/renderer.hpp"
 #include "engine/math.hpp"
 #include "mesh.hpp"
+#include "view.hpp"
 
 namespace rendering::rendering3d {
 	class model {
@@ -11,7 +12,8 @@ namespace rendering::rendering3d {
 		model& translate(math::uvector<float, 3>);
 		model& rotate(math::uvector<float, 3>);
 		model& rotate(math::uvector<float, 3>, math::uvector3D<float>);
-		void render(float x = 0.0f, float y = 0.0f);
+		math::uvector3D<float> center();
+		void render(view<float> view, float x = 0.0f, float y = 0.0f);
 	private:
 		renderer* _renderer;
 		mesh _mesh;

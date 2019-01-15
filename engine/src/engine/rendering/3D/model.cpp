@@ -21,13 +21,16 @@ namespace rendering::rendering3d {
 		translate({ {-point.x(), -point.y(), -point.z()} });
 		return *this;
 	}
-	void model::render(float x, float y) {
+	uvector3D<float> model::center() {
+		return { 0.0f, 0.0f, 0.0f};
+	}
+	void model::render(view<float> view, float x, float y) {
 		std::for_each(_mesh.edges.begin(), _mesh.edges.end(), [&](std::pair<size_t, size_t> pair) {
 			_renderer->render_line(
-				_mesh.vertices(0, pair.first) + x, 
-				-_mesh.vertices(1, pair.first) + y, 
-				_mesh.vertices(0, pair.second) + x, 
-				-_mesh.vertices(1, pair.second) + y);
+				_mesh.vertices(view.first, pair.first) + x, 
+				-_mesh.vertices(view.second, pair.first) + y, 
+				_mesh.vertices(view.first, pair.second) + x, 
+				-_mesh.vertices(view.second, pair.second) + y);
 		});
 	}
 }

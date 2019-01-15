@@ -32,34 +32,36 @@ namespace math {
 		tm = tm * m;
 		return tm;
 	}
-
-	template<class T> umatrix3D<T> rotate(uvector<T, 3> dv) {
-		uradian<T> xrad = deg_to_rad(dv[0]);
-		uradian<T> yrad = deg_to_rad(dv[1]);
-		uradian<T> zrad = deg_to_rad(dv[2]);
-
-		umatrix3D<T> xrot = umatrix3D<T>::multidimensional_constructor<4>{ {
+	template<class T> umatrix3D<T> rotate_x(uradian<T> r) {
+		uradian<T> rad = deg_to_rad(r);
+		return umatrix3D<T>::multidimensional_constructor<4>{ {
 			{ 1, 0, 0, 0 },
-			{ 0, cos(xrad), -sin(xrad), 0 },
-			{ 0, sin(xrad), cos(xrad), 0},
+			{ 0, cos(rad), -sin(rad), 0 },
+			{ 0, sin(rad), cos(rad), 0},
 			{ 0, 0, 0, 1}
 			} };
-
-		umatrix3D<T> yrot = umatrix3D<T>::multidimensional_constructor<4>{ {
-			{ cos(yrad), 0, sin(yrad), 0 },
+	}
+	template<class T> umatrix3D<T> rotate_y(uradian<T> r) {
+		uradian<T> rad = deg_to_rad(r);
+		return umatrix3D<T>::multidimensional_constructor<4>{ {
+			{ cos(rad), 0, sin(rad), 0 },
 			{ 0, 1, 0, 0 },
-			{ -sin(yrad), 0, cos(yrad), 0},
-			{ 0, 0, 0, 1}
+			{ -sin(rad), 0, cos(rad), 0 },
+			{ 0, 0, 0, 1 }
 			} };
-
-		umatrix3D<T> zrot = umatrix3D<T>::multidimensional_constructor<4>{ {
-			{ cos(zrad), sin(zrad), 0, 0 },
-			{ -sin(zrad), cos(zrad), 0, 0 },
+	}
+	template<class T> umatrix3D<T> rotate_z(uradian<T> r) {
+		uradian<T> rad = deg_to_rad(r);
+		return umatrix3D<T>::multidimensional_constructor<4>{ {
+			{ cos(rad), sin(rad), 0, 0 },
+			{ -sin(rad), cos(rad), 0, 0 },
 			{ 0, 0, 1, 0},
 			{ 0, 0, 0, 1}
 			} };
+	}
 
-		return zrot * yrot * xrot;
+	template<class T> umatrix3D<T> rotate(uvector<T, 3> dv) {
+		return rotate_z(dv[2]) * rotate_y(dv[1]) * rotate_x(dv[0]);
 	}
 
 	template<class T> umatrix3D<T> rotate(const umatrix3D<T>& m, uvector<T, 3> dv) {

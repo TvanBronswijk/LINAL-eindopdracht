@@ -4,6 +4,7 @@
 #include <engine/math.hpp>
 #include <engine/render.hpp>
 #include "game/entities/entityfactory.hpp"
+#include "game/entities/spaceship.hpp"
 
 using namespace input;
 using namespace rendering;
@@ -15,31 +16,33 @@ static const int HEIGHT = 640;
 
 void demo() {
 	renderer view{ WIDTH, HEIGHT };
-	entityfactory factory(view);
-	model ship = factory.create_target();
+	entityfactory factory{ view };
+	spaceship ship{ factory.create_spaceship() };
 
 	inputhandler input{};
+	rendering3d::view<float> view_angle = rendering3d::view<float>::xy;
 	try {
 		while (true) {
 			if (input.on_event([&](std::string key) {
-				if (key == "Up") {
-				}
-				if (key == "Down") {
-				}
-				if (key == "Right") {
-				}
-				if (key == "Left") {
-				}
-				if (key == "Space") {
-				}
+				if (key == "W") ship.pitch(-1.0f);
+				else if (key == "S") ship.pitch(1.0f);
+				else if (key == "A") ship.yaw(-1.0f);
+				else if (key == "D") ship.yaw(1.0f);
+				else if (key == "Q") ship.roll(-1.0f);
+				else if (key == "E") ship.roll(1.0f);
+				else if (key == "Shift");
+				else if (key == "Space");
+				else if (key == "1") view_angle = rendering3d::view<float>::xy;
+				else if (key == "2") view_angle = rendering3d::view<float>::yz;
+				else if (key == "3") view_angle = rendering3d::view<float>::xz;
+				else if (key == "Escape") return true;
 				return false;
 			})) break;
 
 			view.display([&](int dt) {
 				view.set_color(colors::RED);
-				ship.render(WIDTH / 2.0f, HEIGHT / 2.0f);
+				ship.get_model().render(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
 			});
-			ship.rotate({ {0.1, 0.1, 0.1} });
 		}
 	}
 	catch (int e) {

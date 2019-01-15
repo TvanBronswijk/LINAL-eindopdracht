@@ -1,10 +1,11 @@
 #pragma once
 #include <engine/math/types.hpp>
 #include <engine/rendering/3D/model.hpp>
+#include"game/collision/collisionbox.hpp"
 
 class target {
 public:
-	target(rendering::rendering3d::model model) : _model(model), grow(true), scale(1.0f), direction(false), counteract(false), timer(0.0f) {}
+	target(rendering::rendering3d::model model) : _model(model), grow(true), scale(1.0f), direction(false), counteract(false), timer(0.0f), _collisionbox(_model) {}
 	void pulse(float dt) { 
 		timer += dt;
 		if (timer > 40.0f) {
@@ -36,4 +37,5 @@ private:
 	bool counteract;
 	float scale;
 	rendering::rendering3d::model _model;
+	collisionbox _collisionbox;
 };

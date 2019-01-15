@@ -4,7 +4,7 @@
 using namespace math;
 namespace rendering::rendering3d {
 	model& model::scale(uvector<float, 3> vec) {
-		_mesh.vertices = math::scale(_mesh.vertices, vec);
+		_scale = vec;
 		return *this;
 	}
 	model& model::translate(uvector<float, 3> vec) {
@@ -22,15 +22,23 @@ namespace rendering::rendering3d {
 		return *this;
 	}
 	uvector3D<float> model::center() {
-		return { 0.0f, 0.0f, 0.0f};
+		return origin;
 	}
 	void model::render(view<float> view, float x, float y) {
+		matrix3D renderable = math::scale(_mesh.vertices, _scale);
+
 		std::for_each(_mesh.edges.begin(), _mesh.edges.end(), [&](std::pair<size_t, size_t> pair) {
 			_renderer->render_line(
-				_mesh.vertices(view.first, pair.first) + x, 
-				-_mesh.vertices(view.second, pair.first) + y, 
-				_mesh.vertices(view.first, pair.second) + x, 
-				-_mesh.vertices(view.second, pair.second) + y);
+				renderable(view.first, pair.first) + x,
+				-renderable(view.second, pair.first) + y,
+				renderable(view.first, pair.second) + x,
+				-renderable(view.second, pair.second) + y);
 		});
+	}
+
+	void model::render_angles(view<float> view, float x, float y) {
+		_renderer->render_line(x, y, x, y);
+		_renderer->render_line(x, y, x, y);
+		_renderer->render_line(x, y, x, y);
 	}
 }

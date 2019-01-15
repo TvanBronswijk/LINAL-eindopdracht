@@ -20,8 +20,7 @@ void demo() {
 	entityfactory factory{ view };
 	spaceship ship{ factory.create_spaceship() };
 	target diamond{ factory.create_target() };
-	
-	//diamond.get_model().translate({ {200.0f, 200.0f, 100.0f} });
+	diamond.get_model().translate({ {200.0f, 200.0f, 300.0f} });
 
 	inputhandler input{};
 	rendering3d::view<float> view_angle = rendering3d::view<float>::xy;
@@ -45,9 +44,8 @@ void demo() {
 
 			view.display([&](int dt) {
 				view.set_color(colors::RED);
-				//ship.get_model().render(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
+				ship.get_model().render(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
 				diamond.get_model().render(view_angle, WIDTH / 2.0f, HEIGHT / 2.0f);
-				diamond.pulse(1000.0f / dt);
 			});
 		}
 	}

@@ -24,35 +24,18 @@ void demo() {
 	try {
 		while (true) {
 			if (input.on_event([&](std::string key) {
-				if (key == "W") {
-					ship.pitch(-1.0f);
-				}
-				if (key == "S") {
-					ship.pitch(1.0f);
-				}
-				if (key == "A") {
-					ship.yaw(-1.0f);
-				}
-				if (key == "D") {
-					ship.yaw(1.0f);
-				}
-				if (key == "Q") {
-					ship.roll(-1.0f);
-				}
-				if (key == "E") {
-					ship.roll(1.0f);
-				}
-				if (key == "Space") {
-				}
-				if (key == "1") {
-					view_angle = rendering3d::view<float>::xy;
-				}
-				if (key == "2") {
-					view_angle = rendering3d::view<float>::yz;
-				}
-				if (key == "3") {
-					view_angle = rendering3d::view<float>::xz;
-				}
+				if (key == "W") ship.pitch(-1.0f);
+				else if (key == "S") ship.pitch(1.0f);
+				else if (key == "A") ship.yaw(-1.0f);
+				else if (key == "D") ship.yaw(1.0f);
+				else if (key == "Q") ship.roll(-1.0f);
+				else if (key == "E") ship.roll(1.0f);
+				else if (key == "Shift");
+				else if (key == "Space");
+				else if (key == "1") view_angle = rendering3d::view<float>::xy;
+				else if (key == "2") view_angle = rendering3d::view<float>::yz;
+				else if (key == "3") view_angle = rendering3d::view<float>::xz;
+				else if (key == "Escape") return true;
 				return false;
 			})) break;
 

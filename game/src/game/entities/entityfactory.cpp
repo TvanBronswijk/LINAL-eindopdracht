@@ -3,11 +3,11 @@
 using namespace rendering::rendering3d;
 model entityfactory::create_spaceship() {
 	mesh msh{
-	matrix3D::multidimensional_constructor<4>{ {
-		{-25.0f, 25.0f, 0.0f, 0.0f},
-		{-25.0f, -25.0f, 25.0f, -15.0f},
-		{-25.0f, -25.0f, -25.0f, -15.f},
-		{1.0f, 1.0f, 1.0f, 1.0f}
+	matrix3D::multidimensional_constructor<6>{ {
+		{-25.0f, 25.0f, 0.0f, 0.0f, -75.0f, 75.0f},
+		{0.0f, 0.0f, 25.0f, 0.0f, 5.0f, 5.0f},
+		{0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 0.0f},
+		{1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f}
 	}},
 	{
 		{0, 1},
@@ -15,7 +15,11 @@ model entityfactory::create_spaceship() {
 		{2, 0},
 		{0, 3},
 		{1, 3},
-		{2, 3}
+		{2, 3},
+		{0, 4},
+		{1, 5},
+		{4, 3},
+		{5, 3}
 	} };
 	return { msh, *_renderer };
 }
